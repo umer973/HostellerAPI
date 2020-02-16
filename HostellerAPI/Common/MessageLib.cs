@@ -27,7 +27,7 @@ namespace KI.RIS.General.Common
             //    CustomMessages = OrderLookup.CopyToDataTable();
             //}
 
-            Save = "Saved";
+            Save = "Success";
             Update = "Updated";
             Delete = "Deleted";
             Error = "Error";

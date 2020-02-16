@@ -101,7 +101,9 @@
     <Compile Include="Common\AlertMessageType.cs" />
     <Compile Include="Common\MessageLib.cs" />
     <Compile Include="Common\ValidationMessageType.cs" />
+    <Compile Include="Controllers\HostelController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\TravellerController.cs" />
     <Compile Include="CorsPolicyFactory.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

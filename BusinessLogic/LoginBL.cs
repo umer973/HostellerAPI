@@ -2,6 +2,9 @@
 using System;
 using System.Data;
 using Modals;
+using System.Web;
+using System.Web.SessionState;
+using KI.RIS.DAL;
 
 namespace BusinessLogic
 {
@@ -36,7 +39,11 @@ namespace BusinessLogic
                 }
                 else
                 {
-                    dsData.Tables.Add(loginData.Copy());
+                    SessionIDManager manager = new SessionIDManager();
+                    string sid = manager.CreateSessionID(HttpContext.Current);
+
+
+                    return sid;
                 }
 
                 //}
@@ -172,30 +179,7 @@ namespace BusinessLogic
         //    }
         //}
 
-        //public Int16 RegisterPortalUser(Int16 Mode, Int16 actionType, DataTable dtUserData)
-        //{
-        //    try
-        //    {
-        //        Int16 status = 0;
 
-        //        if (actionType == 1)
-        //        {
-        //            status = RegisterUser(Mode, dtUserData);
-        //        }
-        //        if (actionType == 2)
-        //        {
-        //            status = ExistingPortalUser(Mode, dtUserData);
-        //        }
-
-        //        return status;
-
-        //    }
-        //    catch
-        //    {
-
-        //        throw;
-        //    }
-        //}
 
         //private Int16 ExistingPortalUser(Int16 Mode, DataTable drCriteria)
         //{
@@ -219,25 +203,47 @@ namespace BusinessLogic
         //    }
         //}
 
-        //private Int16 RegisterUser(Int16 Mode, DataTable dtuserdata)
-        //{
-        //    bool IsSuccess = true;
-        //    IDbTransaction transaction = null;
-        //    try
-        //    {
-        //        transaction = DALHelper.GetTransaction();
-        //        return ObjLogin.Insertsecurityprofile(Mode, dtuserdata, transaction);
-        //    }
-        //    catch
-        //    {
-        //        IsSuccess = false;
-        //        throw;
-        //    }
-        //    finally
-        //    {
-        //        DALHelper.CloseDB(transaction, IsSuccess);
-        //    }
-        //}
+        public Int16 RegisterUser(Hostel _hostel)
+        {
+            bool IsSuccess = true;
+            IDbTransaction transaction = null;
+            try
+            {
+                transaction = DALHelper.GetTransaction();
+
+                return _loginDL.InsertHostelUser(_hostel, transaction);
+            }
+            catch
+            {
+                IsSuccess = false;
+                throw;
+            }
+            finally
+            {
+                DALHelper.CloseDB(transaction, IsSuccess);
+            }
+        }
+        public Int16 RegisterTravellerUser(Traveller _traveller)
+        {
+            bool IsSuccess = true;
+            IDbTransaction transaction = null;
+            try
+            {
+                transaction = DALHelper.GetTransaction();
+
+                return _loginDL.InsertTravellerUser(_traveller, transaction);
+
+            }
+            catch
+            {
+                IsSuccess = false;
+                throw;
+            }
+            finally
+            {
+                DALHelper.CloseDB(transaction, IsSuccess);
+            }
+        }
     }
 }
 

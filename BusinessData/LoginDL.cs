@@ -24,9 +24,13 @@ namespace BusinessData
         //    return ChangeCredentials(dtUser.Rows[0], transaction, mode, genUserId);
         //}
 
-        public Int16 Insertsecurityprofile(Int16 Mode, DataTable drCriteria, IDbTransaction transaction)
+        public Int16 InsertTravellerUser(Traveller _travller, IDbTransaction transaction)
         {
-            return RegisterportalUser(Mode, drCriteria.Rows[0], transaction);
+            return RegisterTravellerUser(_travller, transaction);
+        }
+        public Int16 InsertHostelUser(Hostel _hostel, IDbTransaction transaction)
+        {
+            return RegisterHostelUser(_hostel, transaction);
         }
 
         //public Int16 ExistingPortalUser(Int16 Mode, DataTable drCriteria, IDbTransaction transaction)
@@ -125,7 +129,7 @@ namespace BusinessData
                 }
 
                 DALHelper.FillDataset(con, CommandType.StoredProcedure, "sp_Login", dsResult, new string[] { "User" }, paramData);
-               
+
                 return dsResult.Tables.Contains("User") ? dsResult.Tables["User"] : null;
             }
             catch (FileNotFoundException)
@@ -146,46 +150,35 @@ namespace BusinessData
             }
         }
 
-        private Int16 RegisterportalUser(Int16 Mode, DataRow dr, IDbTransaction transaction)
+        private Int16 RegisterTravellerUser(Traveller _traveller, IDbTransaction transaction)
         {
             try
             {
                 IDbDataParameter[] paramData;
                 Int16 Result = 0;
-                paramData = DALHelperParameterCache.GetSpParameterSet(transaction, "Insertsecurityprofile"); foreach (IDbDataParameter Item in paramData)
+                paramData = DALHelperParameterCache.GetSpParameterSet(transaction, "sp_CreateUser"); foreach (IDbDataParameter Item in paramData)
                 {
                     switch (Item.ParameterName)
                     {
-                        case "P_GenUserID":
-                            Item.Value = dr["GenUserID"];
+                        case "UserName":
+                            Item.Value = _traveller.username;
                             break;
-                        case "P_PatDemographicsID":
-                            Item.Value = dr["PatDemographicsID"];
+                        case "Password":
+                            Item.Value = _traveller.password;
                             break;
-                        case "P_Mrno":
-                            Item.Value = dr["Mrno"];
+                        case "EmailId":
+                            Item.Value = _traveller.emailId;
                             break;
-                        case "P_EmpID":
-                            Item.Value = dr["EmpID"];
+                        case "Address":
+                            Item.Value = "";
                             break;
-                        case "P_ProfileType":
-                            Item.Value = dr["ProfileType"];
+                        case "UserType":
+                            Item.Value = "Traveller";
                             break;
-                        case "P_Password":
-                            Item.Value = dr["Password"];
-                            break;
-                        case "P_PasswordExpDate":
-                            Item.Value = dr["PasswordExpDate"];
-                            break;
-                        case "P_IsValid":
-                            Item.Value = dr["IsValid"];
-                            break;
-                        case "P_EntryDate":
-                            Item.Value = dr["EntryDate"];///.ToString();
-                            break;
+
                     }
                 }
-                Result = Convert.ToInt16(DALHelper.ExecuteNonQuery(transaction, CommandType.StoredProcedure, "Insertsecurityprofile", paramData));
+                Result = Convert.ToInt16(DALHelper.ExecuteNonQuery(transaction, CommandType.StoredProcedure, "sp_CreateUser", paramData));
                 return Result;
             }
             catch (Exception ex)
@@ -194,6 +187,45 @@ namespace BusinessData
             }
         }
 
+        private Int16 RegisterHostelUser(Hostel _hostel, IDbTransaction transaction)
+        {
+            try
+            {
+                IDbDataParameter[] paramData;
+                Int16 Result = 0;
+                paramData = DALHelperParameterCache.GetSpParameterSet(transaction, "sp_CreateUser"); foreach (IDbDataParameter Item in paramData)
+                {
+                    switch (Item.ParameterName)
+                    {
+                        case "UserName":
+                            Item.Value = _hostel.username;
+                            break;
+                        case "Password":
+                            Item.Value = _hostel.password;
+                            break;
+                        case "EmailId":
+                            Item.Value = _hostel.emailId;
+                            break;
+                        case "Address":
+                            Item.Value = _hostel.address;
+                            break;
+                        case "UserType":
+                            Item.Value = "Hostel";
+                            break;
+                        case "PersonalWebSiteLink":
+                            Item.Value = _hostel.websiteLink;
+                            break;
+
+                    }
+                }
+                Result = Convert.ToInt16(DALHelper.ExecuteNonQuery(transaction, CommandType.StoredProcedure, "sp_CreateUser", paramData));
+                return Result;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
         //private Int16 ExistingUserData(Int16 Mode, DataRow drCriteria, IDbTransaction transaction)
         //{
         //    try
