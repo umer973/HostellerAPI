@@ -16,7 +16,7 @@ namespace BusinessLogic
             _loginDL = new LoginDL();
         }
 
-        IDbConnection connection = null;
+       // IDbConnection connection = null;
         //IDbTransaction transaction = null
 
         public object Login(User _user)
@@ -83,7 +83,7 @@ namespace BusinessLogic
                 //DataTable dtUiTheme = oDLUISettings.SelectUiSetting(4, "REPORTING_THEME", Convert.ToInt32(loginData.Rows[0]["GenUserID"]), con);
                 //dtUiTheme.TableName = "UiTheme";
                 //dsData.Tables.Add(dtUiTheme.Copy());
-                return dsData;
+               
             }
             catch
             {
@@ -91,8 +91,9 @@ namespace BusinessLogic
             }
             finally
             {
-                KI.RIS.DAL.DALHelper.CloseDB(con);
+                DALHelper.CloseDB(con);
             }
+           
         }
 
         //private string Encryption(DataTable dtUserData)

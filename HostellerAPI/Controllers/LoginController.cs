@@ -20,7 +20,7 @@ namespace HostellerAPI.Controllers
         public IHttpActionResult GET()
         {
 
-            return Ok("Api Is Running 2");
+            return Ok("Api Is Running 3");
         }
         public IHttpActionResult POST(User _user)
         {
