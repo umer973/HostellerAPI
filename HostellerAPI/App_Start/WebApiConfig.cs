@@ -1,12 +1,9 @@
 ﻿
-using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
-using System.Web.Http.Cors;
-
-using System.Data;
+using Microsoft.Owin.Security.OAuth;
 
 namespace HostellerAPI
 {
@@ -27,9 +24,11 @@ namespace HostellerAPI
             /// Configure web api to use only bearer token authentication. //Install-Package Microsoft.AspNet.WebApi.Owin -Version 5.2.4
 
             //config.SuppressDefaultHostAuthentication();
-            //config.Filters.Add(new HostAuthenticationFilter(OAuthDefaults.AuthenticationType));
+            // config.Filters.Add(new HostAuthenticationFilter(OAuthDefaults.AuthenticationType));
 
-            config.SetCorsPolicyProviderFactory(new CorsPolicyFactory());
+
+
+          //  config.SetCorsPolicyProviderFactory(new CorsPolicyFactory());
 
             ///////////////////To enable json in browser..bydefault its xml
             config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new System.Net.Http.Headers.MediaTypeHeaderValue("text/html"));
@@ -53,15 +52,15 @@ namespace HostellerAPI
             config.Filters.Add(new APIExceptionFilterAttribute());
 
             //////////////////////////////// To enable the Authorization (bearer token)
-            if (IsTokenRequired)
+            if (!IsTokenRequired)
             {
-                config.Filters.Add(new AuthorizeAttribute());
+              //  config.Filters.Add(new AuthorizeAttribute());
             }
             else
             {
                 //////////////////////////////// To enable the CORS 
-                var cors = new EnableCorsAttribute("*", "*", "*");// { SupportsCredentials=true};
-                config.EnableCors(cors); /// Not required in token calling
+                //var cors = new EnableCorsAttribute("*", "*", "*");// { SupportsCredentials=true};
+                //config.EnableCors(cors); /// Not required in token calling
             }
 
             config.MapHttpAttributeRoutes();
@@ -75,12 +74,12 @@ namespace HostellerAPI
 
         private static void TokenChecking()
         {
-          //  var Token = GlobalCache.GlobalCaching.GenApplicationSetting.AsEnumerable().Where(r =>
-          //Convert.ToString(r["Setting"]).Equals("TokenAuthenticationRequired"));
-          //  if (Convert.ToString(Token.ElementAt(0)["Value"]) == "1")
-          //  {
-          //      IsTokenRequired = true;
-          //  }
+            //  var Token = GlobalCache.GlobalCaching.GenApplicationSetting.AsEnumerable().Where(r =>
+            //Convert.ToString(r["Setting"]).Equals("TokenAuthenticationRequired"));
+            //  if (Convert.ToString(Token.ElementAt(0)["Value"]) == "1")
+            //  {
+            //      IsTokenRequired = true;
+            //  }
         }
     }
 }

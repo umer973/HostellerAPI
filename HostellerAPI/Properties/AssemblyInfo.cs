@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 // associated with an assembly.
 [assembly: AssemblyTitle("HostellerAPI")]
 [assembly: AssemblyDescription("")]
-[assembly: AssemblyConfiguration("")]
+[assembly: AssemblyConfiguration("StartupAuth")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("HostellerAPI")]
 [assembly: AssemblyCopyright("Copyright ©  2020")]

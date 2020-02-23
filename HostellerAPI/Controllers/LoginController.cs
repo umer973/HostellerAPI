@@ -6,9 +6,11 @@ using System.Net.Http;
 using System.Web.Http;
 using BusinessLogic;
 using Modals;
+using System.Security.Claims;
 
 namespace HostellerAPI.Controllers
 {
+    
     public class LoginController : ApiController
     {
         LoginBL _loginBL;
@@ -17,11 +19,14 @@ namespace HostellerAPI.Controllers
             _loginBL = new LoginBL();
 
         }
+     
+        [Authorize]
         public IHttpActionResult GET()
         {
-
-            return Ok("Api Is Running 3");
+            var identity = (ClaimsIdentity)User.Identity;
+            return Ok("Api Is Running 3 "+identity.Name);
         }
+        [AllowAnonymous]
         public IHttpActionResult POST(User _user)
         {
             return Ok(_loginBL.Login(_user));
