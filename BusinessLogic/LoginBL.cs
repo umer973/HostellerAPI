@@ -5,6 +5,7 @@ using Modals;
 using System.Web;
 using System.Web.SessionState;
 using KI.RIS.DAL;
+using System.Data.SqlClient;
 
 namespace BusinessLogic
 {
@@ -16,7 +17,7 @@ namespace BusinessLogic
             _loginDL = new LoginDL();
         }
 
-       // IDbConnection connection = null;
+        // IDbConnection connection = null;
         //IDbTransaction transaction = null
 
         public object Login(User _user)
@@ -26,25 +27,25 @@ namespace BusinessLogic
             DataTable fromdt = new DataTable();
             try
             {
-                con = KI.RIS.DAL.DALHelper.GetConnection();
-
-                //string EncryptedPassword = Encryption(dtUserData);
-
-
+                con = DALHelper.GetConnection();
                 DataTable loginData = _loginDL.Login(_user, con);
-                if (loginData == null || loginData.Rows.Count == 0)
+               if (loginData != null && loginData.Rows.Count > 0)
                 {
-
-                    return "Invalid User or Password";
+                    return loginData;
                 }
                 else
                 {
-                    SessionIDManager manager = new SessionIDManager();
-                    string sid = manager.CreateSessionID(HttpContext.Current);
-
-
-                    return sid;
+                    loginData = null;
+                    return "Invalid credentials";
                 }
+                //else
+                //{
+                //    SessionIDManager manager = new SessionIDManager();
+                //    string sid = manager.CreateSessionID(HttpContext.Current);
+
+
+                //    return loginData;
+                //}
 
                 //}
                 //DLSecurity objDLSecurity = new DLSecurity();
@@ -83,7 +84,7 @@ namespace BusinessLogic
                 //DataTable dtUiTheme = oDLUISettings.SelectUiSetting(4, "REPORTING_THEME", Convert.ToInt32(loginData.Rows[0]["GenUserID"]), con);
                 //dtUiTheme.TableName = "UiTheme";
                 //dsData.Tables.Add(dtUiTheme.Copy());
-               
+
             }
             catch
             {
@@ -93,7 +94,7 @@ namespace BusinessLogic
             {
                 DALHelper.CloseDB(con);
             }
-           
+
         }
 
         //private string Encryption(DataTable dtUserData)
@@ -204,15 +205,24 @@ namespace BusinessLogic
         //    }
         //}
 
-        public Int16 RegisterUser(Hostel _hostel)
+        public string RegisterUser(Hostel _hostel)
         {
             bool IsSuccess = true;
+            string message = "";
             IDbTransaction transaction = null;
             try
             {
                 transaction = DALHelper.GetTransaction();
 
-                return _loginDL.InsertHostelUser(_hostel, transaction);
+                Int64 resultID = _loginDL.InsertHostelUser(_hostel, transaction);
+                if (resultID == 3)
+                {
+                    message = "Username registered sucessfully";
+                }
+                else if (resultID == 2)
+                {
+                    message = "Username already registered";
+                }
             }
             catch
             {
@@ -223,27 +233,49 @@ namespace BusinessLogic
             {
                 DALHelper.CloseDB(transaction, IsSuccess);
             }
+            return message;
         }
-        public Int16 RegisterTravellerUser(Traveller _traveller)
+        public string RegisterTravellerUser(Traveller _traveller)
         {
             bool IsSuccess = true;
+            string message = "";
             IDbTransaction transaction = null;
             try
             {
                 transaction = DALHelper.GetTransaction();
 
-                return _loginDL.InsertTravellerUser(_traveller, transaction);
+                Int64 resultID = _loginDL.InsertTravellerUser(_traveller, transaction);
+
+                if (resultID == 3)
+                {
+                    message = "Username registered sucessfully";
+                }
+                else if (resultID == 2)
+                {
+                    message = "Username already registered";
+                }
 
             }
-            catch
+            catch (SqlException ex)
             {
                 IsSuccess = false;
-                throw;
+                if (ex.Message.Contains("UNIQUE KEY"))
+                {
+                    message = "Email already taken";
+                }
+                else
+                {
+                   
+
+                    throw;
+                }
             }
             finally
             {
                 DALHelper.CloseDB(transaction, IsSuccess);
             }
+
+            return message;
         }
     }
 }

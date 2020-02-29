@@ -11,7 +11,7 @@ namespace HostellerAPI.App_Start
     using System.Threading.Tasks;
     using Modals;
     using BusinessLogic;
-
+    using System.Data;
 
     public class AppOAuthProvider : OAuthAuthorizationServerProvider
     {
@@ -23,9 +23,6 @@ namespace HostellerAPI.App_Start
 
             context.Validated();
         }
-
-
-
         private readonly string _publicClientId;
 
         /// <summary>  
@@ -48,11 +45,18 @@ namespace HostellerAPI.App_Start
         public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
         {
             // Initialization.  
+            User _user = new User();
+            _user.username = context.UserName;
+            _user.password = context.Password;
+            _user.deviceToken = context.ClientId;
+            var dtlogin = _loginBL.Login(_user);
+
             var identity = new ClaimsIdentity(context.Options.AuthenticationType);
-            if (context.UserName == "Admin" && context.Password == "1")
+
+            if (dtlogin.ToString() == "Invalid credentials")
             {
-                identity.AddClaim(new Claim("username", "Admin"));
-                identity.AddClaim(new Claim(ClaimTypes.Name, "Admin"));
+                identity.AddClaim(new Claim("username", _user.username));
+                identity.AddClaim(new Claim(ClaimTypes.Name, _user.username));
                 context.Validated(identity);
 
             }
@@ -61,10 +65,6 @@ namespace HostellerAPI.App_Start
                 context.SetError("Invalid credentials");
                 return;
             }
-          
-
-          
-      
         }
 
         public override Task TokenEndpoint(OAuthTokenEndpointContext context)
@@ -84,7 +84,7 @@ namespace HostellerAPI.App_Start
         /// Validate Client authntication override method  
         /// </summary>  
         /// <param name="context">Contect parameter</param>  
-      
+
 
 
         #region Validate client redirect URI override method  

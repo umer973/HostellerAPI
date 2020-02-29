@@ -125,6 +125,9 @@ namespace BusinessData
                         case "Longitude":
                             Item.Value = "";
                             break;
+                        case "DeviceToken":
+                            Item.Value = _user.deviceToken;
+                            break;
                     }
                 }
 
