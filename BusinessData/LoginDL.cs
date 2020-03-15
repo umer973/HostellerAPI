@@ -202,6 +202,7 @@ namespace BusinessData
                     {
                         case "UserName":
                             Item.Value = _hostel.username;
+
                             break;
                         case "Password":
                             Item.Value = _hostel.password;
@@ -217,6 +218,24 @@ namespace BusinessData
                             break;
                         case "PersonalWebSiteLink":
                             Item.Value = _hostel.websiteLink;
+                            break;
+                        case "ProfilePic":
+                            Item.Value = _hostel.profilePic;
+                            break;
+                        case "HostelDormRoomWithBunks":
+                            Item.Value = _hostel.hostelDormRoomwithBunks;
+                            break;
+                        case "HostelDormRoomWithoutBunks":
+                            Item.Value = _hostel.hostelDormRoomwithoutBunks;
+                            break;
+                        case "FemaleBedRooms":
+                            Item.Value = _hostel.femaleDormRooms;
+                            break;
+                        case "SingleBedRooms":
+                            Item.Value = _hostel.singleBedRooms;
+                            break;
+                        case "DoubleBedRooms":
+                            Item.Value = _hostel.doubleBedRooms;
                             break;
 
                     }

@@ -163,7 +163,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
-    <None Include="Properties\PublishProfiles\hosteller.pubxml" />
+    <None Include="Properties\PublishProfiles\API.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

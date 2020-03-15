@@ -13,5 +13,12 @@ namespace Modals
         public string emailId { get; set; }
         public string address { get; set; }
         public string websiteLink { get; set; }
+        public string profilePic { get; set; }
+        public Int32 hostelDormRoomwithBunks { get; set; }
+        public Int32 hostelDormRoomwithoutBunks { get; set; }
+        public Int32 femaleDormRooms { get; set; }
+        public Int32 singleBedRooms { get; set; }
+        public Int32 doubleBedRooms { get; set; }
+
     }
 }

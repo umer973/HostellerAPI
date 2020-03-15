@@ -28,7 +28,7 @@ namespace HostellerAPI
 
 
 
-          //  config.SetCorsPolicyProviderFactory(new CorsPolicyFactory());
+            //  config.SetCorsPolicyProviderFactory(new CorsPolicyFactory());
 
             ///////////////////To enable json in browser..bydefault its xml
             config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new System.Net.Http.Headers.MediaTypeHeaderValue("text/html"));
@@ -47,6 +47,7 @@ namespace HostellerAPI
 
 
             /////////////////////////////////////To configure the json format : Version,status code, Result ...
+            //
             config.MessageHandlers.Add(new WrappingHandler());
 
             config.Filters.Add(new APIExceptionFilterAttribute());
@@ -54,7 +55,7 @@ namespace HostellerAPI
             //////////////////////////////// To enable the Authorization (bearer token)
             if (!IsTokenRequired)
             {
-              //  config.Filters.Add(new AuthorizeAttribute());
+                //  config.Filters.Add(new AuthorizeAttribute());
             }
             else
             {

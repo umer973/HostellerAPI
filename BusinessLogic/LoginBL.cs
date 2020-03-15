@@ -219,7 +219,7 @@ namespace BusinessLogic
                 {
                     message = "Username registered sucessfully";
                 }
-                else if (resultID == 2)
+                else if (resultID == 1)
                 {
                     message = "Username already registered";
                 }
