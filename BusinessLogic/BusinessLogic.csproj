@@ -92,6 +92,7 @@
     <Compile Include="HostelBL.cs" />
     <Compile Include="LoginBL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TravellerCheckInHistoryBL.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\DALHelper-master\KI.RIS.DALHelper.csproj">

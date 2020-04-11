@@ -66,6 +66,7 @@
   <ItemGroup>
     <Compile Include="Hostel.cs" />
     <Compile Include="Traveller.cs" />
+    <Compile Include="TravellerCheckIn.cs" />
     <Compile Include="User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

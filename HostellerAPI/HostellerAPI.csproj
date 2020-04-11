@@ -144,10 +144,12 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="AuthroizeAttribute.cs" />
     <Compile Include="Common\AlertMessageType.cs" />
+    <Compile Include="Common\InMemoryMultipartFormDataStreamProvider.cs" />
     <Compile Include="Common\MessageLib.cs" />
     <Compile Include="Common\ValidationMessageType.cs" />
     <Compile Include="Controllers\HostelController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\TravellerCheckInController.cs" />
     <Compile Include="Controllers\TravellerController.cs" />
     <Compile Include="CorsPolicyFactory.cs" />
     <Compile Include="Global.asax.cs">

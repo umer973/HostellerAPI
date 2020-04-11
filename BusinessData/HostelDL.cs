@@ -97,5 +97,33 @@ namespace BusinessData
                 throw ex;
             }
         }
+
+        public DataTable GetGallery(Int32 hostelId, IDbConnection con)
+        {
+            DataSet dsResult = new DataSet();
+            try
+            {
+                IDbDataParameter[] paramData;
+               
+                paramData = DALHelperParameterCache.GetSpParameterSet(con, "GetHostelGallery"); foreach (IDbDataParameter Item in paramData)
+                {
+                    switch (Item.ParameterName)
+                    {
+                        case "HostelId":
+                            Item.Value = hostelId;
+
+                            break;
+                     
+                    }
+                }
+                DALHelper.FillDataset(con, CommandType.StoredProcedure, "GetHostelGallery", dsResult, new string[] { "HostelGallery" }, paramData);
+
+                return dsResult.Tables.Contains("HostelGallery") ? dsResult.Tables["HostelGallery"] : null;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

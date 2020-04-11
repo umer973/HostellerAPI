@@ -13,6 +13,7 @@ namespace BusinessLogic
     public class HostelBL
     {
         HostelDL _hostelDL = new HostelDL();
+
         public string UpdateHostelUser(Hostel _hostel, Int32 hostelId)
         {
             bool IsSuccess = true;
@@ -71,5 +72,7 @@ namespace BusinessLogic
             }
             return message;
         }
+
+        
     }
 }

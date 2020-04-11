@@ -45,57 +45,7 @@ namespace BusinessData
         #endregion
 
         #region Private Methods
-        //private bool ChangeCredentials(DataRow dr, IDbTransaction trans, Int16 mode, Int64 genUserID)
-        //{
-
-        //    try
-        //    {
-        //        IDbDataParameter[] paramData;
-
-        //        MethodLib objCommonMethodLib = new MethodLib();
-
-        //        bool IsSuccess = false;
-        //        paramData = DALHelperParameterCache.GetSpParameterSet(trans, "UpdateSecurityProfile"); foreach (IDbDataParameter Item in paramData)
-        //        {
-        //            switch (Item.ParameterName)
-        //            {
-        //                case "P_mode":
-        //                    Item.Value = mode;
-        //                    break;
-        //                case "P_GenUserId":
-        //                    Item.Value = genUserID;
-        //                    break;
-        //                case "P_UserID":
-        //                    Item.Value = dr["UserID"];
-        //                    break;
-        //                case "P_ProfileType":
-        //                    Item.Value = dr["ProfileType"];
-        //                    break;
-        //                case "P_Password":
-        //                    if (dr.Table.Columns.Contains("NewPassword"))
-        //                    {
-        //                        Item.Value = dr["NewPassword"];
-        //                    }
-        //                    else if (dr.Table.Columns.Contains("Password"))
-        //                    {
-        //                        Item.Value = dr["Password"];
-        //                    }
-        //                    break;
-        //                case "P_PasswordExpDate":
-        //                    Item.Value = dr["PasswordExpDate"];
-        //                    break;
-        //            }
-        //        }
-        //        IsSuccess = DALHelper.ExecuteNonQuery(trans, CommandType.StoredProcedure, "UpdateSecurityProfile", paramData) > 0 ? true : false;
-        //        return IsSuccess;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        throw ex;
-        //    }
-
-        //}
-
+        
         private DataTable SelectSecurityProfile(User _user, IDbConnection con)
         {
             DataSet dsResult = new DataSet();
@@ -178,6 +128,12 @@ namespace BusinessData
                         case "UserType":
                             Item.Value = "Traveller";
                             break;
+                        case "FirstName":
+                            Item.Value = _traveller.firstName;
+                            break;
+                        case "LastName":
+                            Item.Value = _traveller.lastName;
+                            break;
 
                     }
                 }
@@ -236,6 +192,9 @@ namespace BusinessData
                             break;
                         case "DoubleBedRooms":
                             Item.Value = _hostel.doubleBedRooms;
+                            break;
+                        case "HostelName":
+                            Item.Value = _hostel.hostelName;
                             break;
 
                     }
