@@ -34,7 +34,7 @@ namespace HostellerAPI.Controllers
             _traveller.checkInDate = Convert.ToDateTime(formData["checkInDate"]);
             _traveller.checkOutDate = Convert.ToDateTime(formData["checkOutDate"]);
 
-            return Ok(_travellerBL.UpdateHostelUser(_traveller));
+            return Ok(_travellerBL.AddTravellerCheckInDetails(_traveller));
         }
     }
 }

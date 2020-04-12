@@ -64,6 +64,7 @@ namespace BusinessData
             }
             catch (Exception ex)
             {
+                ErrorLogDL.InsertErrorLog(ex.Message, "UpdateHostelUser");
                 throw ex;
             }
         }
@@ -94,6 +95,7 @@ namespace BusinessData
             }
             catch (Exception ex)
             {
+                ErrorLogDL.InsertErrorLog(ex.Message, "AddGallery");
                 throw ex;
             }
         }
@@ -122,6 +124,7 @@ namespace BusinessData
             }
             catch (Exception ex)
             {
+                ErrorLogDL.InsertErrorLog(ex.Message, "GetGallery");
                 throw ex;
             }
         }

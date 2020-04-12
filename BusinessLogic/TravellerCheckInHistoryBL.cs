@@ -13,7 +13,7 @@ namespace BusinessLogic
     public class TravellerCheckInHistoryBL
     {
         TravellerCheckInHistoryDL _travllerDL = new TravellerCheckInHistoryDL();
-        public string UpdateHostelUser(TravellerCheckIn _traveller)
+        public string AddTravellerCheckInDetails(TravellerCheckIn _traveller)
         {
             bool IsSuccess = true;
             string message = "";
@@ -29,8 +29,10 @@ namespace BusinessLogic
                 }
 
             }
-            catch
+            catch(Exception ex)
             {
+                ErrorLogDL.InsertErrorLog(ex.Message, "AddTravellerCheckInDetails");
+
                 IsSuccess = false;
                 throw;
             }

@@ -46,6 +46,7 @@ namespace BusinessData
             }
             catch (Exception ex)
             {
+                ErrorLogDL.InsertErrorLog(ex.Message, "TravellerCheckIn");
                 throw ex;
             }
         }

@@ -30,8 +30,9 @@ namespace BusinessLogic
                 }
 
             }
-            catch
+            catch (Exception ex)
             {
+                ErrorLogDL.InsertErrorLog(ex.Message, "UpdateHostelUser");
                 IsSuccess = false;
                 throw;
             }
@@ -42,27 +43,48 @@ namespace BusinessLogic
             return message;
         }
 
-        public string AddGallery(DataTable dt, Int32 hostelId)
+        public object AddGallery(DataTable dt, Int32 hostelId)
+        {
+            InsertGalery(dt, hostelId);
+            return GetGallery(hostelId);
+        }
+        private object GetGallery(int hostelId)
+        {
+            object objResult = null;
+            IDbConnection con = null;
+            try
+            {
+                con = DALHelper.GetConnection();
+                objResult = _hostelDL.GetGallery(hostelId, con);
+
+
+            }
+            catch (Exception ex)
+            {
+                ErrorLogDL.InsertErrorLog(ex.Message, "GetGallery");
+            }
+
+            return objResult;
+
+        }
+
+        private void InsertGalery(DataTable dt, Int32 hostelId)
         {
             bool IsSuccess = true;
-            string message = "";
             IDbTransaction transaction = null;
+
             try
             {
                 transaction = DALHelper.GetTransaction();
                 for (int i = 0; i < dt.Rows.Count; i++)
                 {
                     Int64 resultID = _hostelDL.AddGallery(dt.Rows[i], transaction, hostelId);
-
-                    if (resultID > 0)
-                    {
-                        message = "Gallery Added";
-                    }
                 }
 
             }
-            catch
+            catch (Exception ex)
             {
+                ErrorLogDL.InsertErrorLog(ex.Message, "AddGallery");
                 IsSuccess = false;
                 throw;
             }
@@ -70,9 +92,9 @@ namespace BusinessLogic
             {
                 DALHelper.CloseDB(transaction, IsSuccess);
             }
-            return message;
+            
         }
 
-        
+
     }
 }

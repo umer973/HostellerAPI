@@ -54,8 +54,10 @@ namespace BusinessLogic
                 }
 
             }
-            catch
+            catch(Exception ex)
             {
+                ErrorLogDL.InsertErrorLog(ex.Message, "Login");
+
                 throw;
             }
             finally
@@ -86,8 +88,10 @@ namespace BusinessLogic
                     message = "Username already registered";
                 }
             }
-            catch
+            catch(Exception ex)
             {
+                ErrorLogDL.InsertErrorLog(ex.Message, "RegisterUser");
+
                 IsSuccess = false;
                 throw;
             }
@@ -128,8 +132,8 @@ namespace BusinessLogic
                 }
                 else
                 {
-
-
+                    IsSuccess = false;
+                    ErrorLogDL.InsertErrorLog(ex.Message, "RegisterTravellerUser");
                     throw;
                 }
             }

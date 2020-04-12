@@ -99,6 +99,7 @@ namespace BusinessData
             }
             catch (Exception ex)
             {
+                ErrorLogDL.InsertErrorLog(ex.Message, "SelectSecurityProfile");
                 throw ex;
             }
         }
@@ -142,6 +143,7 @@ namespace BusinessData
             }
             catch (Exception ex)
             {
+                ErrorLogDL.InsertErrorLog(ex.Message, "RegisterTravellerUser");
                 throw ex;
             }
         }
@@ -204,62 +206,11 @@ namespace BusinessData
             }
             catch (Exception ex)
             {
+                ErrorLogDL.InsertErrorLog(ex.Message, "RegisterHostelUser");
                 throw ex;
             }
         }
-        //private Int16 ExistingUserData(Int16 Mode, DataRow drCriteria, IDbTransaction transaction)
-        //{
-        //    try
-        //    {
-        //        MethodLib objCommonMethodLib = new MethodLib();
-        //        IDbDataParameter[] paramData;
-        //        Int16 Result = 0;
-        //        paramData = DALHelperParameterCache.GetSpParameterSet(transaction, "[SelectPortalUser]"); foreach (IDbDataParameter Item in paramData)
-        //        {
-        //            switch (Item.ParameterName)
-        //            {
-        //                case "P_Mode":
-        //                    Item.Value = Mode;
-        //                    break;
-        //                case "P_UserID":
-        //                    if (drCriteria.Table.Columns.Contains("ProfileType") && drCriteria["ProfileType"] != DBNull.Value)
-        //                    {
-        //                        if (Convert.ToInt16(drCriteria["ProfileType"]) == 0) //patient
-        //                        {
-        //                            Item.Value = objCommonMethodLib.GetColumnValue(drCriteria, "Mrno");
-        //                        }
-        //                        else  //employee
-        //                        {
-        //                            Item.Value = objCommonMethodLib.GetColumnValue(drCriteria, "EmpID");
-        //                        }
-        //                    }
-        //                    else if (Mode == 0)
-        //                        Item.Value = objCommonMethodLib.GetColumnValue(drCriteria, "Mrno");
-        //                    else if (Mode == 1)
-        //                        Item.Value = objCommonMethodLib.GetColumnValue(drCriteria, "EmpID");
-        //                    break;
-        //                case "P_MobileNo":
-        //                    Item.Value = objCommonMethodLib.GetColumnValue(drCriteria, "Phone");
-        //                    break;
-        //                case "P_Email":
-        //                    Item.Value = objCommonMethodLib.GetColumnValue(drCriteria, "Email");
-        //                    break;
-        //            }
-        //        }
-        //        DataSet dsResult = new DataSet();
-        //        DALHelper.FillDataset(transaction, CommandType.StoredProcedure, "[SelectPortalUser]", dsResult, new string[] { "SecurityProfile" }, paramData);
-
-        //        DataTable dt = dsResult.Tables.Contains("SecurityProfile") ? dsResult.Tables["SecurityProfile"] : null;
-        //        if (dt.Rows.Count > 0 & dt != null)
-        //            Result = Convert.ToInt16(dt.Rows[0][0]);
-        //        return Result;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        throw ex;
-        //    }
-        //}
-
+       
         #endregion
     }
 }
