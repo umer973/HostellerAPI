@@ -151,6 +151,7 @@
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\TravellerCheckInController.cs" />
     <Compile Include="Controllers\TravellerController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="CorsPolicyFactory.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -178,6 +179,10 @@
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BusinessData\BusinessData.csproj">
+      <Project>{98B8E0E5-467F-4059-9F52-F92236DCF779}</Project>
+      <Name>BusinessData</Name>
+    </ProjectReference>
     <ProjectReference Include="..\BusinessLogic\BusinessLogic.csproj">
       <Project>{16edb4b4-fcf1-4331-8e27-8de6796081e3}</Project>
       <Name>BusinessLogic</Name>

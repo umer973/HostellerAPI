@@ -20,9 +20,6 @@ namespace BusinessLogic
             _hostelDL = new HostelDL();
         }
 
-        // IDbConnection connection = null;
-        //IDbTransaction transaction = null
-
         public object Login(User _user)
         {
             IDbConnection con = null;
@@ -37,12 +34,12 @@ namespace BusinessLogic
                 {
                     object objUser = loginData;
                     object objGallery = null;
-                    dsResult.Add("User",objUser);
+                    dsResult.Add("User", objUser);
                     if (loginData.Rows[0]["UserType"].ToString() == "Hostel")
                     {
                         var gallery = _hostelDL.GetGallery(Convert.ToInt32(loginData.Rows[0]["UserId"]), con);
                         objGallery = gallery;
-                       dsResult.Add("Gallery",objGallery);
+                        dsResult.Add("Gallery", objGallery);
                     }
                     return dsResult;
                 }
@@ -54,7 +51,7 @@ namespace BusinessLogic
                 }
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 ErrorLogDL.InsertErrorLog(ex.Message, "Login");
 
@@ -88,7 +85,7 @@ namespace BusinessLogic
                     message = "Username already registered";
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 ErrorLogDL.InsertErrorLog(ex.Message, "RegisterUser");
 
@@ -136,6 +133,45 @@ namespace BusinessLogic
                     ErrorLogDL.InsertErrorLog(ex.Message, "RegisterTravellerUser");
                     throw;
                 }
+            }
+            finally
+            {
+                DALHelper.CloseDB(transaction, IsSuccess);
+            }
+
+            return message;
+        }
+
+
+        public string ChangeUserAuthentication(User _user, string newPassword)
+        {
+            bool IsSuccess = true;
+            string message = "";
+            IDbTransaction transaction = null;
+            try
+            {
+                transaction = DALHelper.GetTransaction();
+
+                Int64 resultID = _loginDL.ChangePassword(_user, transaction, newPassword);
+
+                if (resultID > 0)
+                {
+                    message = "Password changed sucessfully";
+                }
+                else if (resultID == -1)
+                {
+                    message = "Password not changed";
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+
+                IsSuccess = false;
+                ErrorLogDL.InsertErrorLog(ex.Message, "RegisterTravellerUser");
+                throw;
+
             }
             finally
             {

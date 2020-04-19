@@ -23,13 +23,28 @@ namespace BusinessLogic
                 transaction = DALHelper.GetTransaction();
 
                 Int64 resultID = _travllerDL.AddTravellerCheckInDetails(_traveller, transaction);
+                DateTime dt = System.DateTime.Now;
+                var day = dt.DayOfWeek;
+                var time = dt.TimeOfDay;
                 if (resultID > 0)
                 {
-                    message = "Data saved successfully";
+                    if (_traveller.Action == "CheckIn")
+                    {
+                        message = "Traveller CheckedIn Sucessfully on " + day + " at " + time;
+                    }
+                    else if (_traveller.Action == "CheckOut")
+                    {
+                        message = "Traveller Checked Out Sucessfully on " + day + " at " + time;
+                    }
+
+                }
+                else if (resultID == -1)
+                {
+                    message = "Traveller already Checked In ";
                 }
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 ErrorLogDL.InsertErrorLog(ex.Message, "AddTravellerCheckInDetails");
 

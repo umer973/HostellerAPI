@@ -14,15 +14,7 @@ namespace BusinessData
     public class LoginDL
     {
         #region Pubic Methods
-        //public DataTable SelectportalUser(Int16 Mode, DataTable drCriteria, IDbConnection con)
-        //{
-        //    return SelectSecurityProfile(Mode, drCriteria.Rows[0], con);
-        //}
 
-        //public bool UpdateCredentails(DataTable dtUser, IDbTransaction transaction, Int16 mode = 0, Int64 genUserId = 0)
-        //{
-        //    return ChangeCredentials(dtUser.Rows[0], transaction, mode, genUserId);
-        //}
 
         public Int16 InsertTravellerUser(Traveller _travller, IDbTransaction transaction)
         {
@@ -32,11 +24,11 @@ namespace BusinessData
         {
             return RegisterHostelUser(_hostel, transaction);
         }
+        public Int16 ChangePassword(User _user, IDbTransaction transaction,  string newPassword)
+        {
+            return ChangeUserPassword(_user, transaction,newPassword);
+        }
 
-        //public Int16 ExistingPortalUser(Int16 Mode, DataTable drCriteria, IDbTransaction transaction)
-        //{
-        //    return ExistingUserData(Mode, drCriteria.Rows[0], transaction);
-        //}
         public DataTable Login(User _user, IDbConnection con)
         {
 
@@ -45,7 +37,7 @@ namespace BusinessData
         #endregion
 
         #region Private Methods
-        
+
         private DataTable SelectSecurityProfile(User _user, IDbConnection con)
         {
             DataSet dsResult = new DataSet();
@@ -210,7 +202,41 @@ namespace BusinessData
                 throw ex;
             }
         }
-       
+
+        private Int16 ChangeUserPassword(User _user, IDbTransaction transaction,string newPassword)
+        {
+            try
+            {
+                IDbDataParameter[] paramData;
+                Int16 Result = 0;
+                paramData = DALHelperParameterCache.GetSpParameterSet(transaction, "Usp_ChangeUserPassWord"); foreach (IDbDataParameter Item in paramData)
+                {
+                    switch (Item.ParameterName)
+                    {
+                        case "UserName":
+                            Item.Value = _user.username;
+                            break;
+                        case "NewPassWord":
+                            Item.Value = newPassword;
+                            break;
+                        case "OldPassword":
+                            Item.Value = _user.password;
+                            break;
+
+                    }
+                }
+                Result = Convert.ToInt16(DALHelper.ExecuteNonQuery(transaction, CommandType.StoredProcedure, "Usp_ChangeUserPassWord", paramData));
+                return Result;
+            }
+            catch (Exception ex)
+            {
+                ErrorLogDL.InsertErrorLog(ex.Message, "ChangeUserPassword");
+                throw ex;
+            }
+        }
+
+
+
         #endregion
     }
 }

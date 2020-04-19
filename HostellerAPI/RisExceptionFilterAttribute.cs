@@ -1,4 +1,5 @@
 ﻿
+using BusinessData;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,13 +38,17 @@ namespace HostellerAPI
                 //Create the Error Response
 
                 actionExecutedContext.Response = response;
+
+                string exception = actionExecutedContext.Exception.ToString();
+                ErrorLogDL.InsertErrorLog(exception, actionExecutedContext.Exception.Message.ToString());
             }
             else
             {
 
                 ///exception loging
-                //BLGenExceptionLog objException = new BLGenExceptionLog();
-                //objException.SaveException(actionExecutedContext.Exception, "", "", 1, "");
+              
+                string exception = actionExecutedContext.Exception.ToString();
+                ErrorLogDL.InsertErrorLog(exception, actionExecutedContext.Exception.Message.ToString());
 
                 var res = actionExecutedContext.Exception.Message;
                 HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.InternalServerError)

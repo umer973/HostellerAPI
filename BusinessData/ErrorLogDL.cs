@@ -1,20 +1,24 @@
-﻿using KI.RIS.DAL;
+﻿using KI.RIS.
+    DAL;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
+using static System.Net.WebRequestMethods;
 
 namespace BusinessData
 {
     public static class ErrorLogDL
     {
-        public static void InsertErrorLog(string errorMessge, string MethodName)
+        public static void InsertErrorLog(string errorDesc, string errorMessge)
         {
+            IDbTransaction transaction = null;
             try
             {
-                IDbTransaction transaction = null;
+               
                 transaction = DALHelper.GetTransaction();
                 IDbDataParameter[] paramData;
                 Int16 Result = 0;
@@ -22,12 +26,15 @@ namespace BusinessData
                 {
                     switch (Item.ParameterName)
                     {
-                        case "ErrorMessage":
-                            Item.Value = errorMessge;
+                        case "ErrorDescription":
+                            Item.Value = errorDesc;
 
                             break;
-                        case "MethodName":
+                        case "ErrorMessage":
                             Item.Value = errorMessge;
+                            break;
+                        case "Host":
+                            Item.Value = HttpContext.Current.Request.UserHostAddress;
                             break;
 
 
@@ -39,6 +46,10 @@ namespace BusinessData
             catch (Exception ex)
             {
                 throw ex;
+            }
+            finally
+            {
+                DALHelper.CloseDB(transaction, true);
             }
         }
     }

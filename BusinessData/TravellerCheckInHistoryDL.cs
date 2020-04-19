@@ -37,6 +37,9 @@ namespace BusinessData
                         case "CheckOutDate":
                             Item.Value = _traveller.checkOutDate;
                             break;
+                        case "Action":
+                            Item.Value = _traveller.Action;
+                            break;
 
 
                     }

@@ -7,6 +7,8 @@ using System.Web.Http;
 using BusinessLogic;
 using Modals;
 using System.Security.Claims;
+using System.Threading.Tasks;
+using HostellerAPI.Common;
 
 namespace HostellerAPI.Controllers
 {
@@ -26,11 +28,17 @@ namespace HostellerAPI.Controllers
             var identity = (ClaimsIdentity)User.Identity;
             return Ok("Api Is Running 3 "+identity.Name);
         }
+
         [AllowAnonymous]
         public IHttpActionResult POST(User _user)
         {
             return Ok(_loginBL.Login(_user));
         }
+
+
+       
+
+
     }
 
     

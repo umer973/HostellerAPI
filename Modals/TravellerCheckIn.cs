@@ -12,5 +12,6 @@ namespace Modals
         public Int64 hostelId { get; set; }
         public DateTime checkInDate { get; set; }
         public DateTime checkOutDate { get; set; }
+        public string Action { get; set; }
     }
 }
