@@ -107,7 +107,7 @@ namespace BusinessData
             {
                 IDbDataParameter[] paramData;
                
-                paramData = DALHelperParameterCache.GetSpParameterSet(con, "GetHostelGallery"); foreach (IDbDataParameter Item in paramData)
+                paramData = DALHelperParameterCache.GetSpParameterSet(con, "SelectHostelGallery"); foreach (IDbDataParameter Item in paramData)
                 {
                     switch (Item.ParameterName)
                     {
@@ -118,7 +118,7 @@ namespace BusinessData
                      
                     }
                 }
-                DALHelper.FillDataset(con, CommandType.StoredProcedure, "GetHostelGallery", dsResult, new string[] { "HostelGallery" }, paramData);
+                DALHelper.FillDataset(con, CommandType.StoredProcedure, "SelectHostelGallery", dsResult, new string[] { "HostelGallery" }, paramData);
 
                 return dsResult.Tables.Contains("HostelGallery") ? dsResult.Tables["HostelGallery"] : null;
             }

@@ -98,6 +98,7 @@ namespace HostellerAPI.Controllers
             return Ok(_loginBl.RegisterUser(_hostel));
         }
 
+      
         [Route("api/Hostel/UpdateProfile")]
         public async Task<IHttpActionResult> UpdateProfile()
         {
@@ -221,6 +222,11 @@ namespace HostellerAPI.Controllers
             }
 
             return Ok(_hostelBL.AddGallery(dtGallery, hostelId));
+        }
+
+        public IHttpActionResult GET(Int32 hostelId)
+        {
+            return Ok(_hostelBL.GetGallery(hostelId));
         }
 
     }

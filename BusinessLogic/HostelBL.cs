@@ -48,15 +48,24 @@ namespace BusinessLogic
             InsertGalery(dt, hostelId);
             return GetGallery(hostelId);
         }
-        private object GetGallery(int hostelId)
+        public object GetGallery(int hostelId)
         {
             object objResult = null;
+            DataTable dtResult = null;
             IDbConnection con = null;
             try
             {
+                
                 con = DALHelper.GetConnection();
-                objResult = _hostelDL.GetGallery(hostelId, con);
-
+                dtResult = _hostelDL.GetGallery(hostelId, con);
+                if(dtResult.Rows.Count>0)
+                {
+                    objResult = dtResult;
+                }
+                else
+                {
+                    objResult = "No gallery found";
+                }
 
             }
             catch (Exception ex)
@@ -92,7 +101,7 @@ namespace BusinessLogic
             {
                 DALHelper.CloseDB(transaction, IsSuccess);
             }
-            
+
         }
 
 

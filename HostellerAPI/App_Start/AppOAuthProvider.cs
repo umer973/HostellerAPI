@@ -12,6 +12,7 @@ namespace HostellerAPI.App_Start
     using Modals;
     using BusinessLogic;
     using System.Data;
+    using Common;
 
     public class AppOAuthProvider : OAuthAuthorizationServerProvider
     {
@@ -44,19 +45,15 @@ namespace HostellerAPI.App_Start
 
         public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
         {
-            // Initialization.  
-            User _user = new User();
-            _user.username = context.UserName;
-            _user.password = context.Password;
-            _user.deviceToken = context.ClientId;
-            var dtlogin = _loginBL.Login(_user);
 
+            string apikey = "admin";
+            string secret = "admin";
             var identity = new ClaimsIdentity(context.Options.AuthenticationType);
 
-            if (dtlogin.ToString() == "Invalid credentials")
+            if (context.UserName==apikey && context.Password==secret)
             {
-                identity.AddClaim(new Claim("username", _user.username));
-                identity.AddClaim(new Claim(ClaimTypes.Name, _user.username));
+                identity.AddClaim(new Claim("username", apikey));
+                identity.AddClaim(new Claim(ClaimTypes.Name, apikey));
                 context.Validated(identity);
 
             }
