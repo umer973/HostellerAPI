@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BusinessData.TravelleDL;
+using BusinessData.TravellerDL;
 using System.Data;
 using BusinessData;
 using KI.RIS.DAL;

@@ -144,7 +144,7 @@
     <Compile Include="App_Start\AppOAuthProvider.cs" />
     <Compile Include="App_Start\StartupAuth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="AuthroizeAttribute.cs" />
+    <Compile Include="App_Start\AuthroizeAttribute.cs" />
     <Compile Include="Common\AlertMessageType.cs" />
     <Compile Include="Common\InMemoryMultipartFormDataStreamProvider.cs" />
     <Compile Include="Common\MessageLib.cs" />
@@ -153,17 +153,17 @@
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\TravellerCheckInController.cs" />
     <Compile Include="Controllers\UserController.cs" />
-    <Compile Include="CorsPolicyFactory.cs" />
+    <Compile Include="Helper\CorsPolicyFactory.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="GlobalCaching.cs" />
-    <Compile Include="MyCorsPolicyAttribute .cs" />
+    <Compile Include="Common\GlobalCaching.cs" />
+    <Compile Include="Helper\MyCorsPolicyAttribute .cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RisExceptionFilterAttribute.cs" />
+    <Compile Include="RisException\RisExceptionFilterAttribute.cs" />
     <Compile Include="RisException\APIException.cs" />
-    <Compile Include="Startup.cs" />
-    <Compile Include="WrappingHandler.cs" />
+    <Compile Include="App_Start\Startup.cs" />
+    <Compile Include="Helper\WrappingHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
