@@ -13,6 +13,7 @@ namespace HostellerAPI.App_Start
     using BusinessLogic;
     using System.Data;
     using Common;
+    using CommonLib.Encryption;
 
     public class AppOAuthProvider : OAuthAuthorizationServerProvider
     {
@@ -46,8 +47,9 @@ namespace HostellerAPI.App_Start
         public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
         {
 
-            string apikey = "admin";
-            string secret = "admin";
+            string apikey = "Jkx3QwswBMpfRTulZEmYz7b0p0cc";
+            string secret = "gZoeeLONSRfg8U";
+
             var identity = new ClaimsIdentity(context.Options.AuthenticationType);
 
             if (context.UserName==apikey && context.Password==secret)

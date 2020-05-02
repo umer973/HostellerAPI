@@ -189,6 +189,10 @@
       <Project>{16edb4b4-fcf1-4331-8e27-8de6796081e3}</Project>
       <Name>BusinessLogic</Name>
     </ProjectReference>
+    <ProjectReference Include="..\CommonLib\CommonLib.csproj">
+      <Project>{34f095a4-33dd-4f56-9cbf-50e9484718c5}</Project>
+      <Name>CommonLib</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Modals\Modals.csproj">
       <Project>{64bc4ce3-fc2e-4077-869c-3b6773f5e613}</Project>
       <Name>Modals</Name>

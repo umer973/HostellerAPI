@@ -13,6 +13,7 @@ using BusinessLogic;
 
 namespace HostellerAPI.Controllers
 {
+    [Authorize]
     public class UserController : ApiController
     {
         LoginBL _loginBL;

@@ -13,6 +13,7 @@ using BusinessLogic.TravellerBL;
 
 namespace HostellerAPI.Controllers
 {
+    [Authorize]
     public class TravellerCheckInController : ApiController
     {
       

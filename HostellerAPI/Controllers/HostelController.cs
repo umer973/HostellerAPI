@@ -18,6 +18,7 @@ using HostellerAPI.Common;
 
 namespace HostellerAPI.Controllers
 {
+    [Authorize]
     public class HostelController : ApiController
     {
         LoginBL _loginBl = new LoginBL();
@@ -224,6 +225,7 @@ namespace HostellerAPI.Controllers
             return Ok(_hostelBL.AddGallery(dtGallery, hostelId));
         }
 
+       
         public IHttpActionResult GET(string hostelId)
         {
             return Ok(_hostelBL.GetGallery(Convert.ToInt32(hostelId)));
