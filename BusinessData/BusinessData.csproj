@@ -85,7 +85,7 @@
     <Compile Include="HostelDL.cs" />
     <Compile Include="LoginDL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TravellerCheckInHistoryDL.cs" />
+    <Compile Include="TravelleDL\TravellerDL.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\DALHelper-master\KI.RIS.DALHelper.csproj">

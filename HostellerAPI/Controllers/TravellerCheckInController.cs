@@ -9,12 +9,15 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using BusinessLogic;
+using BusinessLogic.TravellerBL;
 
 namespace HostellerAPI.Controllers
 {
     public class TravellerCheckInController : ApiController
     {
-        TravellerCheckInHistoryBL _travellerBL = new TravellerCheckInHistoryBL();
+      
+
+        TravellerBL _travellerBL = new TravellerBL();
 
         public async Task<IHttpActionResult> POST()
         {
@@ -38,7 +41,7 @@ namespace HostellerAPI.Controllers
             }
             else
             {
-                _traveller.checkInDate= System.DateTime.Now;
+                _traveller.checkInDate = System.DateTime.Now;
             }
             if (formData["checkOutDate"] != "")
             {
@@ -51,6 +54,11 @@ namespace HostellerAPI.Controllers
             }
 
             return Ok(_travellerBL.AddTravellerCheckInDetails(_traveller));
+        }
+
+        public IHttpActionResult GET(string travellerId)
+        {
+            return Ok(_travellerBL.GetTravellerCheckIninfo(Convert.ToInt64(travellerId)));
         }
     }
 }

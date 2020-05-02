@@ -7,11 +7,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BusinessData
+namespace BusinessData.TravelleDL
 {
-    public class TravellerCheckInHistoryDL
+    public class TravellerDL
     {
-
 
         public Int16 AddTravellerCheckInDetails(TravellerCheckIn _traveller, IDbTransaction transaction)
         {
@@ -50,6 +49,35 @@ namespace BusinessData
             catch (Exception ex)
             {
                 ErrorLogDL.InsertErrorLog(ex.Message, "TravellerCheckIn");
+                throw ex;
+            }
+        }
+
+        public DataTable GetTravellerChekInInfo(Int64 travellerID, IDbConnection con)
+        {
+            DataSet dsResult = new DataSet();
+            try
+            {
+                IDbDataParameter[] paramData;
+
+                paramData = DALHelperParameterCache.GetSpParameterSet(con, "GetTravellerCheckinDetails"); foreach (IDbDataParameter Item in paramData)
+                {
+                    switch (Item.ParameterName)
+                    {
+                        case "TravellerId":
+                            Item.Value = travellerID;
+
+                            break;
+
+                    }
+                }
+                DALHelper.FillDataset(con, CommandType.StoredProcedure, "GetTravellerCheckinDetails", dsResult, new string[] { "Traveller" }, paramData);
+
+                return dsResult.Tables.Contains("Traveller") ? dsResult.Tables["Traveller"] : null;
+            }
+            catch (Exception ex)
+            {
+                ErrorLogDL.InsertErrorLog(ex.Message, "GetTravellerChekInInfo");
                 throw ex;
             }
         }
