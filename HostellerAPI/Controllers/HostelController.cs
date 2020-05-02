@@ -224,12 +224,13 @@ namespace HostellerAPI.Controllers
             return Ok(_hostelBL.AddGallery(dtGallery, hostelId));
         }
 
-        public IHttpActionResult GET(Int32 hostelId)
+        public IHttpActionResult GET(string hostelId)
         {
-            return Ok(_hostelBL.GetGallery(hostelId));
+            return Ok(_hostelBL.GetGallery(Convert.ToInt32(hostelId)));
         }
+
         [Route("api/Hostel/GetHostels")]
-        public IHttpActionResult GET(string  key)
+        public IHttpActionResult GetHostels(string  key)
         {
             return Ok(_hostelBL.GetHostels(key));
         }
