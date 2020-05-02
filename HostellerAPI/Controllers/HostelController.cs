@@ -228,6 +228,11 @@ namespace HostellerAPI.Controllers
         {
             return Ok(_hostelBL.GetGallery(hostelId));
         }
+        [Route("api/Hostel/GetHostels")]
+        public IHttpActionResult GET(string  key)
+        {
+            return Ok(_hostelBL.GetHostels(key));
+        }
 
     }
 

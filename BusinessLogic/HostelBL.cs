@@ -48,6 +48,7 @@ namespace BusinessLogic
             InsertGalery(dt, hostelId);
             return GetGallery(hostelId);
         }
+
         public object GetGallery(int hostelId)
         {
             object objResult = null;
@@ -101,6 +102,35 @@ namespace BusinessLogic
             {
                 DALHelper.CloseDB(transaction, IsSuccess);
             }
+
+        }
+
+        public object GetHostels(string key)
+        {
+            object objResult = null;
+            DataTable dtResult = null;
+            IDbConnection con = null;
+            try
+            {
+
+                con = DALHelper.GetConnection();
+                dtResult = _hostelDL.GetHostelsByKey(key, con);
+                if (dtResult.Rows.Count > 0)
+                {
+                    objResult = dtResult;
+                }
+                else
+                {
+                    objResult = null;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                ErrorLogDL.InsertErrorLog(ex.Message, "GetGallery");
+            }
+
+            return objResult;
 
         }
 

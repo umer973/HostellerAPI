@@ -136,7 +136,9 @@
   <ItemGroup>
     <Content Include="github-recovery-codes.txt" />
     <Content Include="Global.asax" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\AppOAuthProvider.cs" />
@@ -150,7 +152,6 @@
     <Compile Include="Controllers\HostelController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\TravellerCheckInController.cs" />
-    <Compile Include="Controllers\TravellerController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="CorsPolicyFactory.cs" />
     <Compile Include="Global.asax.cs">
@@ -169,14 +170,15 @@
     <None Include="Properties\PublishProfiles\API.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BusinessData\BusinessData.csproj">

@@ -128,5 +128,35 @@ namespace BusinessData
                 throw ex;
             }
         }
+
+        public DataTable GetHostelsByKey(string key, IDbConnection con)
+        {
+            DataSet dsResult = new DataSet();
+            try
+            {
+                IDbDataParameter[] paramData;
+
+                paramData = DALHelperParameterCache.GetSpParameterSet(con, "SelectHostelsByKey"); foreach (IDbDataParameter Item in paramData)
+                {
+                    switch (Item.ParameterName)
+                    {
+                        case "Key":
+                            Item.Value = key;
+
+                            break;
+
+                    }
+                }
+                DALHelper.FillDataset(con, CommandType.StoredProcedure, "SelectHostelsByKey", dsResult, new string[] { "Users" }, paramData);
+
+                return dsResult.Tables.Contains("Users") ? dsResult.Tables["Users"] : null;
+            }
+            catch (Exception ex)
+            {
+                ErrorLogDL.InsertErrorLog(ex.Message, "GetHostelsByKey");
+                throw ex;
+            }
+        }
+
     }
 }
