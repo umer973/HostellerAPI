@@ -56,6 +56,9 @@ namespace BusinessData
                         case "DoubleBedRooms":
                             Item.Value = _hostel.doubleBedRooms;
                             break;
+                        case "HostelName":
+                            Item.Value = _hostel.hostelName;
+                            break;
 
                     }
                 }

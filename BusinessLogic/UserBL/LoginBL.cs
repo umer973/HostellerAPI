@@ -110,11 +110,11 @@ namespace BusinessLogic
 
                 Int64 resultID = _loginDL.InsertTravellerUser(_traveller, transaction);
 
-                if (resultID == 3)
+                if (resultID > 0)
                 {
                     message = "Username registered sucessfully";
                 }
-                else if (resultID == 2)
+                else
                 {
                     message = "Username already registered";
                 }
