@@ -127,7 +127,7 @@ namespace BusinessLogic
             }
             catch (Exception ex)
             {
-                ErrorLogDL.InsertErrorLog(ex.Message, "GetGallery");
+                ErrorLogDL.InsertErrorLog(ex.Message, "GetHostels");
             }
 
             return objResult;

@@ -76,21 +76,28 @@ namespace BusinessLogic
                 transaction = DALHelper.GetTransaction();
 
                 Int64 resultID = _loginDL.InsertHostelUser(_hostel, transaction);
-                if (resultID == 3)
+                if (resultID > 0)
                 {
                     message = "Username registered sucessfully";
                 }
-                else if (resultID == 1)
+                else
                 {
                     message = "Username already registered";
                 }
             }
-            catch (Exception ex)
+            catch (SqlException ex)
             {
-                ErrorLogDL.InsertErrorLog(ex.Message, "RegisterUser");
-
                 IsSuccess = false;
-                throw;
+                if (ex.Message.Contains("UNIQUE KEY"))
+                {
+                    message = "Email already taken";
+                }
+                else
+                {
+                    IsSuccess = false;
+                    ErrorLogDL.InsertErrorLog(ex.Message, "Register User");
+                    throw;
+                }
             }
             finally
             {

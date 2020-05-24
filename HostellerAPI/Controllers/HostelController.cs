@@ -44,7 +44,7 @@ namespace HostellerAPI.Controllers
             HttpContent file1 = files[0];
             var thisFileName = file1.Headers.ContentDisposition.FileName.Trim('\"');
 
-          
+
 
             string filename = String.Empty;
             Stream input = await file1.ReadAsStreamAsync();
@@ -80,7 +80,7 @@ namespace HostellerAPI.Controllers
             }
             catch { }
 
-            _hostel.hostelName =formData["hostelName"];
+            _hostel.hostelName = formData["hostelName"];
             _hostel.username = formData["username"];
             _hostel.password = formData["password"];
             _hostel.emailId = formData["emailId"];
@@ -92,6 +92,7 @@ namespace HostellerAPI.Controllers
             _hostel.hostelDormRoomwithoutBunks = Convert.ToInt32(formData["hostelDormRoomwithoutBunks"]);
             _hostel.profilePic = URL;
             _hostel.singleBedRooms = Convert.ToInt32(formData["singleBedRooms"]);
+            _hostel.cityName = formData["cityName"];
 
 
             //var response = Request.CreateResponse(HttpStatusCode.OK);
@@ -99,7 +100,7 @@ namespace HostellerAPI.Controllers
             return Ok(_loginBl.RegisterUser(_hostel));
         }
 
-      
+
         [Route("api/Hostel/UpdateProfile")]
         public async Task<IHttpActionResult> UpdateProfile()
         {
@@ -164,6 +165,8 @@ namespace HostellerAPI.Controllers
             _hostel.profilePic = URL;
             _hostel.singleBedRooms = Convert.ToInt32(formData["singleBedRooms"]);
             Int32 hostelId = Convert.ToInt32(formData["hostelId"]);
+            _hostel.cityName = formData["cityName"];
+
 
 
             //var response = Request.CreateResponse(HttpStatusCode.OK);
@@ -225,20 +228,20 @@ namespace HostellerAPI.Controllers
             return Ok(_hostelBL.AddGallery(dtGallery, hostelId));
         }
 
-       
+
         public IHttpActionResult GET(string hostelId)
         {
             return Ok(_hostelBL.GetGallery(Convert.ToInt32(hostelId)));
         }
 
         [Route("api/Hostel/GetHostels")]
-        public IHttpActionResult GetHostels(string  key)
+        public IHttpActionResult GetHostels(string cityName)
         {
-            return Ok(_hostelBL.GetHostels(key));
+            return Ok(_hostelBL.GetHostels(cityName));
         }
 
     }
 
- 
+
 }
 

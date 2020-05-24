@@ -190,6 +190,9 @@ namespace BusinessData
                         case "HostelName":
                             Item.Value = _hostel.hostelName;
                             break;
+                        case "CityName":
+                            Item.Value = _hostel.cityName;
+                            break;
 
                     }
                 }
