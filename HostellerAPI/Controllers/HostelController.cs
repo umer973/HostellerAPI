@@ -18,7 +18,7 @@ using HostellerAPI.Common;
 
 namespace HostellerAPI.Controllers
 {
-    [Authorize]
+   
     public class HostelController : ApiController
     {
         LoginBL _loginBl = new LoginBL();
