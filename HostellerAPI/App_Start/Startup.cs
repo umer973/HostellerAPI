@@ -21,7 +21,7 @@ namespace HostellerAPI
             {
                 TokenEndpointPath = new PathString("/api_token"),
                 Provider = myProvider,
-                AccessTokenExpireTimeSpan = TimeSpan.FromDays(30),
+                AccessTokenExpireTimeSpan = TimeSpan.FromDays(356),
                 AllowInsecureHttp = true
             };
             app.UseOAuthAuthorizationServer(options);
