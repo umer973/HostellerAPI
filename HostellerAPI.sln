@@ -1,15 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.757
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HostellerAPI", "HostellerAPI\HostellerAPI.csproj", "{BBB4C4AB-B11C-47A2-87CC-7F0DFCC18DAD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessLogic", "BusinessLogic\BusinessLogic.csproj", "{16EDB4B4-FCF1-4331-8E27-8DE6796081E3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessData", "BusinessData\BusinessData.csproj", "{98B8E0E5-467F-4059-9F52-F92236DCF779}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KI.RIS.DALHelper", "..\..\DALHelper-master\KI.RIS.DALHelper.csproj", "{43D72E1E-BB99-4836-8AE9-EFDEB3B75C41}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Modals", "Modals\Modals.csproj", "{64BC4CE3-FC2E-4077-869C-3B6773F5E613}"
 EndProject
@@ -33,10 +31,6 @@ Global
 		{98B8E0E5-467F-4059-9F52-F92236DCF779}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{98B8E0E5-467F-4059-9F52-F92236DCF779}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{98B8E0E5-467F-4059-9F52-F92236DCF779}.Release|Any CPU.Build.0 = Release|Any CPU
-		{43D72E1E-BB99-4836-8AE9-EFDEB3B75C41}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{43D72E1E-BB99-4836-8AE9-EFDEB3B75C41}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{43D72E1E-BB99-4836-8AE9-EFDEB3B75C41}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{43D72E1E-BB99-4836-8AE9-EFDEB3B75C41}.Release|Any CPU.Build.0 = Release|Any CPU
 		{64BC4CE3-FC2E-4077-869C-3B6773F5E613}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{64BC4CE3-FC2E-4077-869C-3B6773F5E613}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{64BC4CE3-FC2E-4077-869C-3B6773F5E613}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -48,5 +42,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B41346CC-BAED-459F-894B-E860BD2FC026}
 	EndGlobalSection
 EndGlobal
