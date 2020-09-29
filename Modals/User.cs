@@ -13,6 +13,8 @@ namespace Modals
         public string password { get; set; }
         public string deviceToken { get; set; }
 
+        public string userType { get; set; }
+
 
     }
 }

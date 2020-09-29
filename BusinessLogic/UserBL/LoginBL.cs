@@ -14,10 +14,12 @@ namespace BusinessLogic
     {
         LoginDL _loginDL;
         HostelDL _hostelDL;
+        User _userDL;
         public LoginBL()
         {
             _loginDL = new LoginDL();
             _hostelDL = new HostelDL();
+            _userDL = new User();
         }
 
         public object Login(User _user)
@@ -66,7 +68,7 @@ namespace BusinessLogic
 
 
 
-        public string RegisterUser(Hostel _hostel)
+        public string RegisterUser(User _user)
         {
             bool IsSuccess = true;
             string message = "";
@@ -75,7 +77,7 @@ namespace BusinessLogic
             {
                 transaction = DALHelper.GetTransaction();
 
-                Int64 resultID = _loginDL.InsertHostelUser(_hostel, transaction);
+                Int64 resultID = _loginDL.RegisterUser(_user, transaction);
                 if (resultID > 0)
                 {
                     message = "Username registered sucessfully";
@@ -95,7 +97,7 @@ namespace BusinessLogic
                 else
                 {
                     IsSuccess = false;
-                    ErrorLogDL.InsertErrorLog(ex.Message, "Register User");
+                   // ErrorLogDL.InsertErrorLog(ex.Message, "Register User");
                     throw;
                 }
             }

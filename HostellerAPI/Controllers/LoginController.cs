@@ -22,7 +22,7 @@ namespace HostellerAPI.Controllers
 
         }
      
-        [Authorize]
+       
         public IHttpActionResult GET()
         {
             var identity = (ClaimsIdentity)User.Identity;

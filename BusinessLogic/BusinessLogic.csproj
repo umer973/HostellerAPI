@@ -30,6 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="KI.RIS.DAL">
+      <HintPath>..\DALHelper-master\bin\Debug\KI.RIS.DAL.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Owin, Version=4.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Owin.4.1.0\lib\net45\Microsoft.Owin.dll</HintPath>
       <Private>True</Private>
@@ -95,10 +98,6 @@
     <Compile Include="TravellerBL\TravellerBL.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\DALHelper-master\KI.RIS.DALHelper.csproj">
-      <Project>{43d72e1e-bb99-4836-8ae9-efdeb3b75c41}</Project>
-      <Name>KI.RIS.DALHelper</Name>
-    </ProjectReference>
     <ProjectReference Include="..\BusinessData\BusinessData.csproj">
       <Project>{98b8e0e5-467f-4059-9f52-f92236dcf779}</Project>
       <Name>BusinessData</Name>

@@ -24,9 +24,9 @@ namespace BusinessData
         {
             return RegisterHostelUser(_hostel, transaction);
         }
-        public Int16 ChangePassword(User _user, IDbTransaction transaction,  string newPassword)
+        public Int16 ChangePassword(User _user, IDbTransaction transaction, string newPassword)
         {
-            return ChangeUserPassword(_user, transaction,newPassword);
+            return ChangeUserPassword(_user, transaction, newPassword);
         }
 
         public DataTable Login(User _user, IDbConnection con)
@@ -206,7 +206,7 @@ namespace BusinessData
             }
         }
 
-        private Int16 ChangeUserPassword(User _user, IDbTransaction transaction,string newPassword)
+        private Int16 ChangeUserPassword(User _user, IDbTransaction transaction, string newPassword)
         {
             try
             {
@@ -234,6 +234,46 @@ namespace BusinessData
             catch (Exception ex)
             {
                 ErrorLogDL.InsertErrorLog(ex.Message, "ChangeUserPassword");
+                throw ex;
+            }
+        }
+
+        public Int16 RegisterUser(User _user, IDbTransaction transaction)
+        {
+            try
+            {
+                IDbDataParameter[] paramData;
+                Int16 Result = 0;
+                paramData = DALHelperParameterCache.GetSpParameterSet(transaction, "RegisterUsers"); foreach (IDbDataParameter Item in paramData)
+                {
+                    switch (Item.ParameterName)
+                    {
+                        case "UserName":
+                            Item.Value = _user.username;
+                            break;
+                        case "Password":
+                            Item.Value = _user.password;
+                            break;
+                        case "EmailId":
+                            Item.Value = _user.email;
+                            break;
+                        case "Address":
+                            Item.Value = "";
+                            break;
+                        case "UserType":
+                            Item.Value = _user.userType;
+                            break;
+
+
+
+                    }
+                }
+                Result = Convert.ToInt16(DALHelper.ExecuteNonQuery(transaction, CommandType.StoredProcedure, "RegisterUsers", paramData));
+                return Result;
+            }
+            catch (Exception ex)
+            {
+                // ErrorLogDL.InsertErrorLog(ex.Message, "RegisterTravellerUser");
                 throw ex;
             }
         }

@@ -18,87 +18,87 @@ using HostellerAPI.Common;
 
 namespace HostellerAPI.Controllers
 {
-   // remove 
+  
     public class HostelController : ApiController
     {
         LoginBL _loginBl = new LoginBL();
         HostelBL _hostelBL = new HostelBL();
 
 
-        public async Task<IHttpActionResult> POST()
-        {
-            Hostel _hostel = new Hostel();
-            // Check if the request contains multipart/form-data.  
-            if (!Request.Content.IsMimeMultipartContent())
-            {
-                throw new HttpResponseException(HttpStatusCode.UnsupportedMediaType);
-            }
+        //public async Task<IHttpActionResult> POST()
+        //{
+        //    Hostel _hostel = new Hostel();
+        //    // Check if the request contains multipart/form-data.  
+        //    if (!Request.Content.IsMimeMultipartContent())
+        //    {
+        //        throw new HttpResponseException(HttpStatusCode.UnsupportedMediaType);
+        //    }
 
-            var provider = await Request.Content.ReadAsMultipartAsync<InMemoryMultipartFormDataStreamProvider>(new InMemoryMultipartFormDataStreamProvider());
-            //access form data  
-            NameValueCollection formData = provider.FormData;
-            //access files  
-            IList<HttpContent> files = provider.Files;
-
-
-            HttpContent file1 = files[0];
-            var thisFileName = file1.Headers.ContentDisposition.FileName.Trim('\"');
+        //    var provider = await Request.Content.ReadAsMultipartAsync<InMemoryMultipartFormDataStreamProvider>(new InMemoryMultipartFormDataStreamProvider());
+        //    //access form data  
+        //    NameValueCollection formData = provider.FormData;
+        //    //access files  
+        //    IList<HttpContent> files = provider.Files;
 
 
-
-            string filename = String.Empty;
-            Stream input = await file1.ReadAsStreamAsync();
-            string directoryName = String.Empty;
-            string URL = String.Empty;
-            string tempDocUrl = WebConfigurationManager.AppSettings["DocsUrl"];
-
-
-            var path = HttpRuntime.AppDomainAppPath;
-            directoryName = System.IO.Path.Combine(path, "ClientDocument");
-            filename = System.IO.Path.Combine(directoryName, thisFileName);
-
-            //Deletion exists file  
-            if (File.Exists(filename))
-            {
-                File.Delete(filename);
-            }
-
-            string DocsPath = tempDocUrl + "/" + "ClientDocument" + "/";
-            URL = DocsPath + thisFileName;
+        //    HttpContent file1 = files[0];
+        //    var thisFileName = file1.Headers.ContentDisposition.FileName.Trim('\"');
 
 
 
-            //Directory.CreateDirectory(@directoryName);  
-            try
-            {
-                using (Stream file = File.OpenWrite(filename))
-                {
-                    input.CopyTo(file);
-                    //close file  
-                    file.Close();
-                }
-            }
-            catch { }
-
-            _hostel.hostelName = formData["hostelName"];
-            _hostel.username = formData["username"];
-            _hostel.password = formData["password"];
-            _hostel.emailId = formData["emailId"];
-            _hostel.address = formData["address"];
-            _hostel.websiteLink = formData["websiteLink"];
-            _hostel.doubleBedRooms = Convert.ToInt32(formData["doubleBedRooms"]);
-            _hostel.femaleDormRooms = Convert.ToInt32(formData["femaleDormRooms"]);
-            _hostel.hostelDormRoomwithBunks = Convert.ToInt32(formData["hostelDormRoomwithBunks"]);
-            _hostel.hostelDormRoomwithoutBunks = Convert.ToInt32(formData["hostelDormRoomwithoutBunks"]);
-            _hostel.profilePic = URL;
-            _hostel.singleBedRooms = Convert.ToInt32(formData["singleBedRooms"]);
-            _hostel.cityName = formData["cityName"];
+        //    string filename = String.Empty;
+        //    Stream input = await file1.ReadAsStreamAsync();
+        //    string directoryName = String.Empty;
+        //    string URL = String.Empty;
+        //    string tempDocUrl = WebConfigurationManager.AppSettings["DocsUrl"];
 
 
-            //var response = Request.CreateResponse(HttpStatusCode.OK);
-            //response.Headers.Add("DocsUrl", URL);
-            return Ok(_loginBl.RegisterUser(_hostel));
-        }
+        //    var path = HttpRuntime.AppDomainAppPath;
+        //    directoryName = System.IO.Path.Combine(path, "ClientDocument");
+        //    filename = System.IO.Path.Combine(directoryName, thisFileName);
+
+        //    //Deletion exists file  
+        //    if (File.Exists(filename))
+        //    {
+        //        File.Delete(filename);
+        //    }
+
+        //    string DocsPath = tempDocUrl + "/" + "ClientDocument" + "/";
+        //    URL = DocsPath + thisFileName;
+
+
+
+        //    //Directory.CreateDirectory(@directoryName);  
+        //    try
+        //    {
+        //        using (Stream file = File.OpenWrite(filename))
+        //        {
+        //            input.CopyTo(file);
+        //            //close file  
+        //            file.Close();
+        //        }
+        //    }
+        //    catch { }
+
+        //    _hostel.hostelName = formData["hostelName"];
+        //    _hostel.username = formData["username"];
+        //    _hostel.password = formData["password"];
+        //    _hostel.emailId = formData["emailId"];
+        //    _hostel.address = formData["address"];
+        //    _hostel.websiteLink = formData["websiteLink"];
+        //    _hostel.doubleBedRooms = Convert.ToInt32(formData["doubleBedRooms"]);
+        //    _hostel.femaleDormRooms = Convert.ToInt32(formData["femaleDormRooms"]);
+        //    _hostel.hostelDormRoomwithBunks = Convert.ToInt32(formData["hostelDormRoomwithBunks"]);
+        //    _hostel.hostelDormRoomwithoutBunks = Convert.ToInt32(formData["hostelDormRoomwithoutBunks"]);
+        //    _hostel.profilePic = URL;
+        //    _hostel.singleBedRooms = Convert.ToInt32(formData["singleBedRooms"]);
+        //    _hostel.cityName = formData["cityName"];
+
+
+        //    //var response = Request.CreateResponse(HttpStatusCode.OK);
+        //    //response.Headers.Add("DocsUrl", URL);
+        //    return Ok(_loginBl.RegisterUser(_hostel));
+        //}
 
 
         [Route("api/Hostel/UpdateProfile")]
