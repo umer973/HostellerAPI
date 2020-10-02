@@ -9,10 +9,11 @@ using Modals;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using HostellerAPI.Common;
+using System.Collections.Specialized;
 
 namespace HostellerAPI.Controllers
 {
-    
+
     public class LoginController : ApiController
     {
         LoginBL _loginBL;
@@ -21,25 +22,40 @@ namespace HostellerAPI.Controllers
             _loginBL = new LoginBL();
 
         }
-     
-       
+
+
         public IHttpActionResult GET()
         {
             var identity = (ClaimsIdentity)User.Identity;
-            return Ok("Api Is Running 3 "+identity.Name);
+            return Ok("Api Is Running 3 " + identity.Name);
         }
 
         [AllowAnonymous]
-        public IHttpActionResult POST(User _user)
+        [Route("api/LoginUser")]
+        public async Task<IHttpActionResult> POST()
         {
-            return Ok(_loginBL.Login(_user));
+
+            if (!Request.Content.IsMimeMultipartContent())
+            {
+                throw new HttpResponseException(HttpStatusCode.UnsupportedMediaType);
+            }
+
+            var provider = await Request.Content.ReadAsMultipartAsync<InMemoryMultipartFormDataStreamProvider>(new InMemoryMultipartFormDataStreamProvider());
+            //access form data  
+            NameValueCollection formData = provider.FormData;
+
+            var user = new User
+            {
+                username = formData["userName"],
+                password = formData["password"],
+                email = formData["email"],
+                deviceToken = "",
+                
+            };
+
+            return Ok(_loginBL.Login(user));
         }
-
-
-       
-
-
     }
 
-    
+
 }

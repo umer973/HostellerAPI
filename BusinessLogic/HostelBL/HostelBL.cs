@@ -14,7 +14,7 @@ namespace BusinessLogic
     {
         HostelDL _hostelDL = new HostelDL();
 
-        public string UpdateHostelUser(Hostel _hostel, Int32 hostelId)
+        public string UpdateHostelUser(Hostel _hostel)
         {
             bool IsSuccess = true;
             string message = "";
@@ -23,7 +23,7 @@ namespace BusinessLogic
             {
                 transaction = DALHelper.GetTransaction();
 
-                Int64 resultID = _hostelDL.UpdateHostelUser(_hostel, transaction, hostelId);
+                Int64 resultID = _hostelDL.UpdateHostelUser(_hostel, transaction);
                 if (resultID > 0)
                 {
                     message = "Hostel updated successfully";

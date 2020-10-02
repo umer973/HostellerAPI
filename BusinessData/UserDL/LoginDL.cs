@@ -46,11 +46,11 @@ namespace BusinessData
 
 
                 IDbDataParameter[] paramData;
-                paramData = DALHelperParameterCache.GetSpParameterSet(con, "sp_Login"); foreach (IDbDataParameter Item in paramData)
+                paramData = DALHelperParameterCache.GetSpParameterSet(con, "GetLogin"); foreach (IDbDataParameter Item in paramData)
                 {
                     switch (Item.ParameterName)
                     {
-                        case "EmailId":
+                        case "Email":
                             Item.Value = _user.email;
                             break;
                         case "UserName":
@@ -59,12 +59,11 @@ namespace BusinessData
                         case "Password":
 
                             Item.Value = _user.password;
-
                             break;
-                        case "Latitude":
+                        case "Lat":
                             Item.Value = "";
                             break;
-                        case "Longitude":
+                        case "Long":
                             Item.Value = "";
                             break;
                         case "DeviceToken":
@@ -73,7 +72,7 @@ namespace BusinessData
                     }
                 }
 
-                DALHelper.FillDataset(con, CommandType.StoredProcedure, "sp_Login", dsResult, new string[] { "User" }, paramData);
+                DALHelper.FillDataset(con, CommandType.StoredProcedure, "GetLogin", dsResult, new string[] { "User" }, paramData);
 
                 return dsResult.Tables.Contains("User") ? dsResult.Tables["User"] : null;
             }
@@ -268,7 +267,7 @@ namespace BusinessData
 
                     }
                 }
-                Result = Convert.ToInt16(DALHelper.ExecuteNonQuery(transaction, CommandType.StoredProcedure, "RegisterUsers", paramData));
+                Result = Convert.ToInt16(DALHelper.ExecuteScalar(transaction, CommandType.StoredProcedure, "RegisterUsers", paramData));
                 return Result;
             }
             catch (Exception ex)

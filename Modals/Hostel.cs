@@ -21,5 +21,6 @@ namespace Modals
         public Int32 doubleBedRooms { get; set; }
         public string hostelName { get; set; }
         public string cityName { get; set; }
+        public int userId { get; set; }
     }
 }

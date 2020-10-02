@@ -18,7 +18,7 @@ using HostellerAPI.Common;
 
 namespace HostellerAPI.Controllers
 {
-  
+
     public class HostelController : ApiController
     {
         LoginBL _loginBl = new LoginBL();
@@ -101,10 +101,10 @@ namespace HostellerAPI.Controllers
         //}
 
 
-        [Route("api/Hostel/UpdateProfile")]
-        public async Task<IHttpActionResult> UpdateProfile()
+        [Route("api/UpdateHostelProfile")]
+        public async Task<IHttpActionResult> POST()
         {
-            Hostel _hostel = new Hostel();
+
             // Check if the request contains multipart/form-data.  
             if (!Request.Content.IsMimeMultipartContent())
             {
@@ -116,11 +116,11 @@ namespace HostellerAPI.Controllers
             NameValueCollection formData = provider.FormData;
             //access files  
             IList<HttpContent> files = provider.Files;
+            if (files.Count > 0)
+            { }
 
             HttpContent file1 = files[0];
             var thisFileName = file1.Headers.ContentDisposition.FileName.Trim('\"');
-
-
             string filename = String.Empty;
             Stream input = await file1.ReadAsStreamAsync();
             string directoryName = String.Empty;
@@ -129,7 +129,7 @@ namespace HostellerAPI.Controllers
 
 
             var path = HttpRuntime.AppDomainAppPath;
-            directoryName = System.IO.Path.Combine(path, "ClientDocument");
+            directoryName = System.IO.Path.Combine(path, "Images");
             filename = System.IO.Path.Combine(directoryName, thisFileName);
 
             //Deletion exists file  
@@ -138,7 +138,7 @@ namespace HostellerAPI.Controllers
                 File.Delete(filename);
             }
 
-            string DocsPath = tempDocUrl + "/" + "ClientDocument" + "/";
+            string DocsPath = tempDocUrl + "/" + "Images" + "/";
             URL = DocsPath + thisFileName;
 
 
@@ -153,25 +153,30 @@ namespace HostellerAPI.Controllers
                     file.Close();
                 }
             }
+
             catch { }
 
-            _hostel.hostelName = formData["hostelName"];
-            _hostel.address = formData["address"];
-            _hostel.websiteLink = formData["websiteLink"];
-            _hostel.doubleBedRooms = Convert.ToInt32(formData["doubleBedRooms"]);
-            _hostel.femaleDormRooms = Convert.ToInt32(formData["femaleDormRooms"]);
-            _hostel.hostelDormRoomwithBunks = Convert.ToInt32(formData["hostelDormRoomwithBunks"]);
-            _hostel.hostelDormRoomwithoutBunks = Convert.ToInt32(formData["hostelDormRoomwithoutBunks"]);
-            _hostel.profilePic = URL;
-            _hostel.singleBedRooms = Convert.ToInt32(formData["singleBedRooms"]);
-            Int32 hostelId = Convert.ToInt32(formData["hostelId"]);
-            _hostel.cityName = formData["cityName"];
+            var hostel = new Hostel
+            {
+                hostelName = formData["hostelName"],
+                address = formData["address"],
+                websiteLink = formData["websiteLink"],
+                doubleBedRooms = Convert.ToInt32(formData["doubleBedRooms"]),
+                femaleDormRooms = Convert.ToInt32(formData["femaleDormRooms"]),
+                hostelDormRoomwithBunks = Convert.ToInt32(formData["hostelDormRoomwithBunks"]),
+                hostelDormRoomwithoutBunks = Convert.ToInt32(formData["hostelDormRoomwithoutBunks"]),
+                profilePic = URL,
+                singleBedRooms = Convert.ToInt32(formData["singleBedRooms"]),
+                userId = Convert.ToInt32(formData["userId"]),
+                cityName = formData["cityName"],
+
+            };
 
 
 
             //var response = Request.CreateResponse(HttpStatusCode.OK);
             //response.Headers.Add("DocsUrl", URL);
-            return Ok(_hostelBL.UpdateHostelUser(_hostel, hostelId));
+            return Ok(_hostelBL.UpdateHostelUser(hostel));
         }
 
         [Route("api/Hostel/AddGallery")]

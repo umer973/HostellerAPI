@@ -11,18 +11,18 @@ namespace BusinessData
 {
     public class HostelDL
     {
-        public Int16 UpdateHostelUser(Hostel _hostel, IDbTransaction transaction,Int32 hostelId)
+        public Int16 UpdateHostelUser(Hostel _hostel, IDbTransaction transaction)
         {
             try
             {
                 IDbDataParameter[] paramData;
                 Int16 Result = 0;
-                paramData = DALHelperParameterCache.GetSpParameterSet(transaction, "UpdateHostelProfile"); foreach (IDbDataParameter Item in paramData)
+                paramData = DALHelperParameterCache.GetSpParameterSet(transaction, "InsertHostelProfile"); foreach (IDbDataParameter Item in paramData)
                 {
                     switch (Item.ParameterName)
                     {
-                        case "HostelId":
-                            Item.Value = hostelId;
+                        case "UserID":
+                            Item.Value = _hostel.userId;
 
                             break;
                         case "Password":
@@ -41,13 +41,13 @@ namespace BusinessData
                         case "ProfilePic":
                             Item.Value = _hostel.profilePic;
                             break;
-                        case "HostelDomRoomsWithBunks":
+                        case "HostelDormRoomWithBunks":
                             Item.Value = _hostel.hostelDormRoomwithBunks;
                             break;
-                        case "HostelDomRoomsWithOutBunks":
+                        case "HostelDormRoomWithoutBunks":
                             Item.Value = _hostel.hostelDormRoomwithoutBunks;
                             break;
-                        case "FemaleDomRooms":
+                        case "FemaleBedRooms":
                             Item.Value = _hostel.femaleDormRooms;
                             break;
                         case "SingleBedRooms":
@@ -59,18 +59,18 @@ namespace BusinessData
                         case "HostelName":
                             Item.Value = _hostel.hostelName;
                             break;
-                        case "CityName":
+                        case "City":
                             Item.Value = _hostel.cityName;
                             break;
 
                     }
                 }
-                Result = Convert.ToInt16(DALHelper.ExecuteNonQuery(transaction, CommandType.StoredProcedure, "UpdateHostelProfile", paramData));
+                Result = Convert.ToInt16(DALHelper.ExecuteNonQuery(transaction, CommandType.StoredProcedure, "InsertHostelProfile", paramData));
                 return Result;
             }
             catch (Exception ex)
             {
-                ErrorLogDL.InsertErrorLog(ex.Message, "UpdateHostelUser");
+                ErrorLogDL.InsertErrorLog(ex.Message, "HostelDL::UpdateHostelUser");
                 throw ex;
             }
         }

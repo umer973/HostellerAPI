@@ -13,12 +13,12 @@ namespace BusinessData
 {
     public static class ErrorLogDL
     {
-        public static void InsertErrorLog(string errorDesc, string errorMessge)
+        public static void InsertErrorLog(string errorMessge, string pageName)
         {
             IDbTransaction transaction = null;
             try
             {
-               
+
                 transaction = DALHelper.GetTransaction();
                 IDbDataParameter[] paramData;
                 Int16 Result = 0;
@@ -26,12 +26,12 @@ namespace BusinessData
                 {
                     switch (Item.ParameterName)
                     {
-                        case "ErrorDescription":
-                            Item.Value = errorDesc;
-
-                            break;
                         case "ErrorMessage":
                             Item.Value = errorMessge;
+
+                            break;
+                        case "PageName":
+                            Item.Value = pageName;
                             break;
                         case "Host":
                             Item.Value = HttpContext.Current.Request.UserHostAddress;

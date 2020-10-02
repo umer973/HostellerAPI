@@ -39,9 +39,9 @@ namespace BusinessLogic
                     dsResult.Add("User", objUser);
                     if (loginData.Rows[0]["UserType"].ToString() == "Hostel")
                     {
-                        var gallery = _hostelDL.GetGallery(Convert.ToInt32(loginData.Rows[0]["UserId"]), con);
-                        objGallery = gallery;
-                        dsResult.Add("Gallery", objGallery);
+                       // var gallery = _hostelDL.GetGallery(Convert.ToInt32(loginData.Rows[0]["UserId"]), con);
+                       // objGallery = gallery;
+                       // dsResult.Add("Gallery", objGallery);
                     }
                     return dsResult;
                 }
@@ -55,7 +55,7 @@ namespace BusinessLogic
             }
             catch (Exception ex)
             {
-                ErrorLogDL.InsertErrorLog(ex.Message, "Login");
+                ErrorLogDL.InsertErrorLog(ex.Message, "LoginBL:Login");
 
                 throw;
             }
@@ -80,7 +80,7 @@ namespace BusinessLogic
                 Int64 resultID = _loginDL.RegisterUser(_user, transaction);
                 if (resultID > 0)
                 {
-                    message = "Username registered sucessfully";
+                    message = resultID.ToString();
                 }
                 else
                 {
@@ -92,12 +92,12 @@ namespace BusinessLogic
                 IsSuccess = false;
                 if (ex.Message.Contains("UNIQUE KEY"))
                 {
-                    message = "Email already taken";
+                    message = "User already registered";
                 }
                 else
                 {
                     IsSuccess = false;
-                   // ErrorLogDL.InsertErrorLog(ex.Message, "Register User");
+                    ErrorLogDL.InsertErrorLog(ex.Message, "LoginBL : RegisterUser");
                     throw;
                 }
             }
@@ -139,7 +139,7 @@ namespace BusinessLogic
                 else
                 {
                     IsSuccess = false;
-                    ErrorLogDL.InsertErrorLog(ex.Message, "RegisterTravellerUser");
+                    ErrorLogDL.InsertErrorLog(ex.Message, "LoginBL:RegisterTravellerUser");
                     throw;
                 }
             }
