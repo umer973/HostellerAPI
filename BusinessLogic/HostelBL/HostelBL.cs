@@ -143,6 +143,37 @@ namespace BusinessLogic
 
         }
 
+        public object GetHostelProfile(int hostelId)
+        {
+            object objResult = null;
+            DataTable dtResult = null;
+            Dictionary<string, object> dsResult = new Dictionary<string, object>();
+            IDbConnection con = null;
+            try
+            {
 
+                con = DALHelper.GetConnection();
+                dtResult = _hostelDL.GetHostelProfile(hostelId, con);
+                if (dtResult.Rows.Count > 0)
+                {
+                    objResult = dtResult;
+                    dsResult.Add("Profile", dtResult);
+                    dtResult = _hostelDL.GetGallery(hostelId, con);
+                    dsResult.Add("Gallery", dtResult);
+                }
+                else
+                {
+                    objResult = "No data found";
+                }
+
+            }
+            catch (Exception ex)
+            {
+                ErrorLogDL.InsertErrorLog(ex.Message, "GetHostelProfile");
+            }
+
+            return dsResult;
+
+        }
     }
 }

@@ -106,11 +106,11 @@ namespace BusinessLogic.TravellerBL
 
                 if (resultID > 0)
                 {
-                    message = "Username registered sucessfully";
+                    message = "Profile Updated Successfully";
                 }
                 else
                 {
-                    message = "Username already registered";
+                    message = "error";
                 }
 
             }

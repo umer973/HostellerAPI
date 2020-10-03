@@ -81,7 +81,7 @@ namespace BusinessData
             {
                 IDbDataParameter[] paramData;
                 Int16 Result = 0;
-                paramData = DALHelperParameterCache.GetSpParameterSet(transaction, "InsertHostelGallery"); foreach (IDbDataParameter Item in paramData)
+                paramData = DALHelperParameterCache.GetSpParameterSet(transaction, "InsertGallery"); foreach (IDbDataParameter Item in paramData)
                 {
                     switch (Item.ParameterName)
                     {
@@ -89,14 +89,14 @@ namespace BusinessData
                             Item.Value = hostelId;
 
                             break;
-                        case "Gallery":
+                        case "ImageUrl":
                             Item.Value = dr["ImageUrl"];
                             break;
                         
 
                     }
                 }
-                Result = Convert.ToInt16(DALHelper.ExecuteNonQuery(transaction, CommandType.StoredProcedure, "InsertHostelGallery", paramData));
+                Result = Convert.ToInt16(DALHelper.ExecuteNonQuery(transaction, CommandType.StoredProcedure, "InsertGallery", paramData));
                 return Result;
             }
             catch (Exception ex)
@@ -113,7 +113,7 @@ namespace BusinessData
             {
                 IDbDataParameter[] paramData;
                
-                paramData = DALHelperParameterCache.GetSpParameterSet(con, "SelectHostelGallery"); foreach (IDbDataParameter Item in paramData)
+                paramData = DALHelperParameterCache.GetSpParameterSet(con, "GetHostellerGallery"); foreach (IDbDataParameter Item in paramData)
                 {
                     switch (Item.ParameterName)
                     {
@@ -124,7 +124,7 @@ namespace BusinessData
                      
                     }
                 }
-                DALHelper.FillDataset(con, CommandType.StoredProcedure, "SelectHostelGallery", dsResult, new string[] { "HostelGallery" }, paramData);
+                DALHelper.FillDataset(con, CommandType.StoredProcedure, "GetHostellerGallery", dsResult, new string[] { "HostelGallery" }, paramData);
 
                 return dsResult.Tables.Contains("HostelGallery") ? dsResult.Tables["HostelGallery"] : null;
             }
@@ -142,7 +142,7 @@ namespace BusinessData
             {
                 IDbDataParameter[] paramData;
 
-                paramData = DALHelperParameterCache.GetSpParameterSet(con, "SelectHostelsByKey"); foreach (IDbDataParameter Item in paramData)
+                paramData = DALHelperParameterCache.GetSpParameterSet(con, "GetHostels"); foreach (IDbDataParameter Item in paramData)
                 {
                     switch (Item.ParameterName)
                     {
@@ -153,13 +153,42 @@ namespace BusinessData
 
                     }
                 }
-                DALHelper.FillDataset(con, CommandType.StoredProcedure, "SelectHostelsByKey", dsResult, new string[] { "Users" }, paramData);
+                DALHelper.FillDataset(con, CommandType.StoredProcedure, "GetHostels", dsResult, new string[] { "HostelProfile" }, paramData);
 
-                return dsResult.Tables.Contains("Users") ? dsResult.Tables["Users"] : null;
+                return dsResult.Tables.Contains("HostelProfile") ? dsResult.Tables["HostelProfile"] : null;
             }
             catch (Exception ex)
             {
                 ErrorLogDL.InsertErrorLog(ex.Message, "GetHostelsByKey");
+                throw ex;
+            }
+        }
+
+        public DataTable GetHostelProfile(Int32 hostelId, IDbConnection con)
+        {
+            DataSet dsResult = new DataSet();
+            try
+            {
+                IDbDataParameter[] paramData;
+
+                paramData = DALHelperParameterCache.GetSpParameterSet(con, "GetHostellerProfile"); foreach (IDbDataParameter Item in paramData)
+                {
+                    switch (Item.ParameterName)
+                    {
+                        case "HostelId":
+                            Item.Value = hostelId;
+
+                            break;
+
+                    }
+                }
+                DALHelper.FillDataset(con, CommandType.StoredProcedure, "GetHostellerProfile", dsResult, new string[] { "HostelProfile" }, paramData);
+
+                return dsResult.Tables.Contains("HostelProfile") ? dsResult.Tables["HostelProfile"] : null;
+            }
+            catch (Exception ex)
+            {
+                ErrorLogDL.InsertErrorLog(ex.Message, "GetHostelProfile");
                 throw ex;
             }
         }
