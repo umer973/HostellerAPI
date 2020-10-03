@@ -43,6 +43,7 @@ namespace HostellerAPI.Controllers
             return Ok(_loginBL.RegisterUser(_user));
 
         }
+
         public async Task<IHttpActionResult> POST()
         {
             User _user = new User();

@@ -16,10 +16,7 @@ namespace BusinessData
         #region Pubic Methods
 
 
-        public Int16 InsertTravellerUser(Traveller _travller, IDbTransaction transaction)
-        {
-            return RegisterTravellerUser(_travller, transaction);
-        }
+        
         public Int16 InsertHostelUser(Hostel _hostel, IDbTransaction transaction)
         {
             return RegisterHostelUser(_hostel, transaction);
@@ -95,49 +92,7 @@ namespace BusinessData
             }
         }
 
-        private Int16 RegisterTravellerUser(Traveller _traveller, IDbTransaction transaction)
-        {
-            try
-            {
-                IDbDataParameter[] paramData;
-                Int16 Result = 0;
-                paramData = DALHelperParameterCache.GetSpParameterSet(transaction, "sp_CreateUser"); foreach (IDbDataParameter Item in paramData)
-                {
-                    switch (Item.ParameterName)
-                    {
-                        case "UserName":
-                            Item.Value = _traveller.username;
-                            break;
-                        case "Password":
-                            Item.Value = _traveller.password;
-                            break;
-                        case "EmailId":
-                            Item.Value = _traveller.emailId;
-                            break;
-                        case "Address":
-                            Item.Value = "";
-                            break;
-                        case "UserType":
-                            Item.Value = "Traveller";
-                            break;
-                        case "FirstName":
-                            Item.Value = _traveller.firstName;
-                            break;
-                        case "LastName":
-                            Item.Value = _traveller.lastName;
-                            break;
-
-                    }
-                }
-                Result = Convert.ToInt16(DALHelper.ExecuteNonQuery(transaction, CommandType.StoredProcedure, "sp_CreateUser", paramData));
-                return Result;
-            }
-            catch (Exception ex)
-            {
-                ErrorLogDL.InsertErrorLog(ex.Message, "RegisterTravellerUser");
-                throw ex;
-            }
-        }
+       
 
         private Int16 RegisterHostelUser(Hostel _hostel, IDbTransaction transaction)
         {

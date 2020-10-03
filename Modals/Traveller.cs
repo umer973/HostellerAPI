@@ -13,5 +13,6 @@ namespace Modals
         public string emailId { get; set; }
         public string firstName { get; set; }
         public string lastName { get; set; }
+        public int UserId { get; set; }
     }
 }

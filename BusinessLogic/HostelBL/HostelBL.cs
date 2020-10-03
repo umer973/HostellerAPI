@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using BusinessData;
 using Modals;
+using System.Data.SqlClient;
 
 namespace BusinessLogic
 {
@@ -30,11 +31,19 @@ namespace BusinessLogic
                 }
 
             }
-            catch (Exception ex)
+            catch (SqlException ex)
             {
-                ErrorLogDL.InsertErrorLog(ex.Message, "UpdateHostelUser");
                 IsSuccess = false;
-                throw;
+                if (ex.Message.Contains("UNIQUE KEY"))
+                {
+                    message = "cannot insert hostel name with same name";
+                }
+                else
+                {
+                    IsSuccess = false;
+                    ErrorLogDL.InsertErrorLog(ex.Message, "HostelBL : UpdateHostelUser");
+                    throw;
+                }
             }
             finally
             {

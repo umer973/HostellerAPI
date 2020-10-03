@@ -108,48 +108,7 @@ namespace BusinessLogic
             return message;
         }
 
-        public string RegisterTravellerUser(Traveller _traveller)
-        {
-            bool IsSuccess = true;
-            string message = "";
-            IDbTransaction transaction = null;
-            try
-            {
-                transaction = DALHelper.GetTransaction();
-
-                Int64 resultID = _loginDL.InsertTravellerUser(_traveller, transaction);
-
-                if (resultID > 0)
-                {
-                    message = "Username registered sucessfully";
-                }
-                else
-                {
-                    message = "Username already registered";
-                }
-
-            }
-            catch (SqlException ex)
-            {
-                IsSuccess = false;
-                if (ex.Message.Contains("UNIQUE KEY"))
-                {
-                    message = "Email already taken";
-                }
-                else
-                {
-                    IsSuccess = false;
-                    ErrorLogDL.InsertErrorLog(ex.Message, "LoginBL:RegisterTravellerUser");
-                    throw;
-                }
-            }
-            finally
-            {
-                DALHelper.CloseDB(transaction, IsSuccess);
-            }
-
-            return message;
-        }
+        
 
 
         public string ChangeUserAuthentication(User _user, string newPassword)

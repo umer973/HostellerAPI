@@ -81,5 +81,49 @@ namespace BusinessData.TravellerDL
                 throw ex;
             }
         }
+
+        public Int16 RegisterTravellerUser(Traveller _traveller, IDbTransaction transaction)
+        {
+            try
+            {
+                IDbDataParameter[] paramData;
+                Int16 Result = 0;
+                paramData = DALHelperParameterCache.GetSpParameterSet(transaction, "InsertTravellerProfile"); foreach (IDbDataParameter Item in paramData)
+                {
+                    switch (Item.ParameterName)
+                    {
+                        case "UserId":
+                            Item.Value = _traveller.UserId;
+                            break;
+                        case "Password":
+                            Item.Value = _traveller.password;
+                            break;
+                        case "EmailId":
+                            Item.Value = _traveller.emailId;
+                            break;
+                        case "Address":
+                            Item.Value = "";
+                            break;
+                        case "UserType":
+                            Item.Value = "Traveller";
+                            break;
+                        case "FirstName":
+                            Item.Value = _traveller.firstName;
+                            break;
+                        case "LastName":
+                            Item.Value = _traveller.lastName;
+                            break;
+
+                    }
+                }
+                Result = Convert.ToInt16(DALHelper.ExecuteNonQuery(transaction, CommandType.StoredProcedure, "InsertTravellerProfile", paramData));
+                return Result;
+            }
+            catch (Exception ex)
+            {
+                ErrorLogDL.InsertErrorLog(ex.Message, "RegisterTravellerUser");
+                throw ex;
+            }
+        }
     }
 }

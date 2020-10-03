@@ -8,6 +8,7 @@ using System.Data;
 using BusinessData;
 using KI.RIS.DAL;
 using Modals;
+using System.Data.SqlClient;
 
 namespace BusinessLogic.TravellerBL
 {
@@ -90,6 +91,49 @@ namespace BusinessLogic.TravellerBL
 
             return objResult;
 
+        }
+
+        public string RegisterTravellerUser(Traveller _traveller)
+        {
+            bool IsSuccess = true;
+            string message = "";
+            IDbTransaction transaction = null;
+            try
+            {
+                transaction = DALHelper.GetTransaction();
+
+                Int64 resultID = _travellerDL.RegisterTravellerUser(_traveller, transaction);
+
+                if (resultID > 0)
+                {
+                    message = "Username registered sucessfully";
+                }
+                else
+                {
+                    message = "Username already registered";
+                }
+
+            }
+            catch (SqlException ex)
+            {
+                IsSuccess = false;
+                if (ex.Message.Contains("UNIQUE KEY"))
+                {
+                    message = "Email already taken";
+                }
+                else
+                {
+                    IsSuccess = false;
+                    ErrorLogDL.InsertErrorLog(ex.Message, "TravellerBL:RegisterTravellerUser");
+                    throw;
+                }
+            }
+            finally
+            {
+                DALHelper.CloseDB(transaction, IsSuccess);
+            }
+
+            return message;
         }
     }
 }
