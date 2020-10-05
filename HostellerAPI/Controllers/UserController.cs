@@ -64,5 +64,11 @@ namespace HostellerAPI.Controllers
             return Ok(_loginBL.ChangeUserAuthentication(_user, newPassword));
 
         }
+        [Route("api/PostFeedback")]
+       
+        public IHttpActionResult POST()
+        {
+
+        }
     }
 }

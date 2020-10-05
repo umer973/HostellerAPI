@@ -31,11 +31,11 @@ namespace BusinessLogic.TravellerBL
                 var time = dt.TimeOfDay;
                 if (resultID > 0)
                 {
-                    if (_traveller.Action == "CheckIn")
+                    if (_traveller.Action == "1")
                     {
                         message = "Traveller CheckedIn Sucessfully on " + day + " at " + time;
                     }
-                    else if (_traveller.Action == "CheckOut")
+                    else if (_traveller.Action == "2")
                     {
                         message = "Traveller Checked Out Sucessfully on " + day + " at " + time;
                     }
@@ -43,7 +43,15 @@ namespace BusinessLogic.TravellerBL
                 }
                 else if (resultID == -1)
                 {
-                    message = "Traveller already Checked In ";
+                    message = "Traveller already Checked In";
+                }
+                else if (resultID == -3)
+                {
+                    message = "Traveller is not Checked In";
+                }
+                else if (resultID == -4)
+                {
+                    message = "QRCode not found";
                 }
 
             }
@@ -134,6 +142,37 @@ namespace BusinessLogic.TravellerBL
             }
 
             return message;
+        }
+
+        public object GetTravellerProfile(Int64 travellerID)
+        {
+            object objResult = null;
+            DataTable dtResult = null;
+            IDbConnection con = null;
+            try
+            {
+       
+
+                con = DALHelper.GetConnection();
+                dtResult = _travellerDL.GetTravellerProfile(travellerID, con);
+                if (dtResult.Rows.Count > 0)
+                {
+                    objResult = dtResult;
+                }
+                else
+                {
+                    objResult = null;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                ErrorLogDL.InsertErrorLog(ex.Message, "GetTravellerProfile");
+            }
+          
+
+            return objResult;
+
         }
     }
 }
