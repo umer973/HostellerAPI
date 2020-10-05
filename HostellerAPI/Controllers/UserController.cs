@@ -13,7 +13,7 @@ using BusinessLogic;
 
 namespace HostellerAPI.Controllers
 {
-   
+
     public class UserController : ApiController
     {
         LoginBL _loginBL;
@@ -64,11 +64,17 @@ namespace HostellerAPI.Controllers
             return Ok(_loginBL.ChangeUserAuthentication(_user, newPassword));
 
         }
-        [Route("api/PostFeedback")]
-       
-        public IHttpActionResult POST()
-        {
 
+        [Route("api/PostFeedback")]
+        public IHttpActionResult PostFeedBack()
+        {
+            return Ok();
+
+        }
+        [Route("api/GetHelpUsText")]
+        public IHttpActionResult GetHelpUsText()
+        {
+            return Ok("Test help text");
         }
     }
 }
