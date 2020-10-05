@@ -1,5 +1,4 @@
-﻿using BusinessData;
-using System;
+﻿using System; 
 using System.Data;
 using Modals;
 using System.Web;
@@ -7,6 +6,8 @@ using System.Web.SessionState;
 using KI.RIS.DAL;
 using System.Data.SqlClient;
 using System.Collections.Generic;
+using CommonLib.CommonHelper;
+using BusinessData;
 
 namespace BusinessLogic
 {
@@ -66,8 +67,6 @@ namespace BusinessLogic
 
         }
 
-
-
         public string RegisterUser(User _user)
         {
             bool IsSuccess = true;
@@ -81,6 +80,7 @@ namespace BusinessLogic
                 if (resultID > 0)
                 {
                     message = resultID.ToString();
+                    Email.SendMail("Dear "+_user.username+" your account created sucessfully", _user.email, "Account registration");
                 }
                 else
                 {

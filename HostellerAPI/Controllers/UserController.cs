@@ -17,6 +17,7 @@ namespace HostellerAPI.Controllers
     public class UserController : ApiController
     {
         LoginBL _loginBL;
+
         public UserController()
         {
             _loginBL = new LoginBL();
@@ -71,6 +72,7 @@ namespace HostellerAPI.Controllers
             return Ok();
 
         }
+
         [Route("api/GetHelpUsText")]
         public IHttpActionResult GetHelpUsText()
         {
