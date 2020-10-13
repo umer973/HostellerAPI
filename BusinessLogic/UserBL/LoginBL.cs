@@ -108,9 +108,7 @@ namespace BusinessLogic
             return message;
         }
 
-        
-
-
+       
         public string ChangeUserAuthentication(User _user, string newPassword)
         {
             bool IsSuccess = true;
@@ -128,7 +126,7 @@ namespace BusinessLogic
                 }
                 else if (resultID == -1)
                 {
-                    message = "Password not changed";
+                    message = "OldPasword is incorrect.";
                 }
 
             }

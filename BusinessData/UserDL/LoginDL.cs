@@ -16,7 +16,7 @@ namespace BusinessData
         #region Pubic Methods
 
 
-        
+
         public Int16 InsertHostelUser(Hostel _hostel, IDbTransaction transaction)
         {
             return RegisterHostelUser(_hostel, transaction);
@@ -92,8 +92,6 @@ namespace BusinessData
             }
         }
 
-       
-
         private Int16 RegisterHostelUser(Hostel _hostel, IDbTransaction transaction)
         {
             try
@@ -166,14 +164,14 @@ namespace BusinessData
             {
                 IDbDataParameter[] paramData;
                 Int16 Result = 0;
-                paramData = DALHelperParameterCache.GetSpParameterSet(transaction, "Usp_ChangeUserPassWord"); foreach (IDbDataParameter Item in paramData)
+                paramData = DALHelperParameterCache.GetSpParameterSet(transaction, "ChangePassword"); foreach (IDbDataParameter Item in paramData)
                 {
                     switch (Item.ParameterName)
                     {
-                        case "UserName":
-                            Item.Value = _user.username;
+                        case "UserId":
+                            Item.Value = _user.userId;
                             break;
-                        case "NewPassWord":
+                        case "NewPassword":
                             Item.Value = newPassword;
                             break;
                         case "OldPassword":
@@ -182,7 +180,7 @@ namespace BusinessData
 
                     }
                 }
-                Result = Convert.ToInt16(DALHelper.ExecuteNonQuery(transaction, CommandType.StoredProcedure, "Usp_ChangeUserPassWord", paramData));
+                Result = Convert.ToInt16(DALHelper.ExecuteNonQuery(transaction, CommandType.StoredProcedure, "ChangePassword", paramData));
                 return Result;
             }
             catch (Exception ex)

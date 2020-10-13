@@ -45,9 +45,9 @@ namespace HostellerAPI.Controllers
 
         }
 
-        public async Task<IHttpActionResult> POST()
+        [Route("api/ChangePassword")]
+        public async Task<IHttpActionResult> ChangePassword()
         {
-            User _user = new User();
 
             if (!Request.Content.IsMimeMultipartContent())
             {
@@ -58,11 +58,14 @@ namespace HostellerAPI.Controllers
             //access form data  
             NameValueCollection formData = provider.FormData;
 
-            _user.username = formData["username"];
-            _user.password = formData["oldPassword"];
+            var user = new User
+            {
+                userId = Convert.ToInt32(formData["userId"]),
+                password = formData["oldPassword"]
+            };
             var newPassword = formData["newPassword"];
 
-            return Ok(_loginBL.ChangeUserAuthentication(_user, newPassword));
+            return Ok(_loginBL.ChangeUserAuthentication(user, newPassword));
 
         }
 
@@ -78,5 +81,7 @@ namespace HostellerAPI.Controllers
         {
             return Ok("Test help text");
         }
+
+
     }
 }
