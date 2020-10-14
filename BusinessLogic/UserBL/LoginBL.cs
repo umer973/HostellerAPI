@@ -1,4 +1,4 @@
-﻿using System; 
+﻿using System;
 using System.Data;
 using Modals;
 using System.Web;
@@ -40,9 +40,9 @@ namespace BusinessLogic
                     dsResult.Add("User", objUser);
                     if (loginData.Rows[0]["UserType"].ToString() == "Hostel")
                     {
-                       // var gallery = _hostelDL.GetGallery(Convert.ToInt32(loginData.Rows[0]["UserId"]), con);
-                       // objGallery = gallery;
-                       // dsResult.Add("Gallery", objGallery);
+                        // var gallery = _hostelDL.GetGallery(Convert.ToInt32(loginData.Rows[0]["UserId"]), con);
+                        // objGallery = gallery;
+                        // dsResult.Add("Gallery", objGallery);
                     }
                     return dsResult;
                 }
@@ -76,15 +76,16 @@ namespace BusinessLogic
             {
                 transaction = DALHelper.GetTransaction();
 
-                Int64 resultID = _loginDL.RegisterUser(_user, transaction);
-                if (resultID > 0)
+                Int64 Result = _loginDL.RegisterUser(_user, transaction);
+
+                if (Result > 0)
                 {
-                    message = resultID.ToString();
-                    Email.SendMail("Dear "+_user.username+" your account created sucessfully", _user.email, "Account registration");
+                    message = Result.ToString();
+                    Email.SendMail("Dear " + _user.username + " your account has been created successfully", _user.email, "Account Registration");
                 }
                 else
                 {
-                    message = "Username already registered";
+                    message = "unable to create user please contact provider support";
                 }
             }
             catch (SqlException ex)
@@ -108,7 +109,7 @@ namespace BusinessLogic
             return message;
         }
 
-       
+
         public string ChangeUserAuthentication(User _user, string newPassword)
         {
             bool IsSuccess = true;

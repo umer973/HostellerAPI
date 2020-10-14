@@ -190,12 +190,14 @@ namespace BusinessData
             }
         }
 
-        public Int16 RegisterUser(User _user, IDbTransaction transaction)
+        public Int64 RegisterUser(User _user, IDbTransaction transaction)
         {
             try
             {
                 IDbDataParameter[] paramData;
-                Int16 Result = 0;
+                Int64 Result = 0;
+                DataSet dsResult = new DataSet();
+
                 paramData = DALHelperParameterCache.GetSpParameterSet(transaction, "RegisterUsers"); foreach (IDbDataParameter Item in paramData)
                 {
                     switch (Item.ParameterName)
@@ -215,12 +217,18 @@ namespace BusinessData
                         case "UserType":
                             Item.Value = _user.userType;
                             break;
-
-
                     }
+
                 }
-                Result = Convert.ToInt16(DALHelper.ExecuteNonQuery(transaction, CommandType.StoredProcedure, "RegisterUsers", paramData));
-                return Result;
+
+                DALHelper.FillDataset(transaction, CommandType.StoredProcedure, "RegisterUsers", dsResult, new string[] { "Users" }, paramData);
+
+                return dsResult.Tables.Count > 0 ? Convert.ToInt64(dsResult.Tables["Users"].Rows[0]["UserId"].ToString()) : 0;
+
+
+
+
+
             }
             catch (Exception ex)
             {
