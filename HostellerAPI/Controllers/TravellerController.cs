@@ -41,7 +41,7 @@ namespace HostellerAPI.Controllers
         }
 
         [Route("api/GetTravellerProfile")]
-        public  IHttpActionResult GetTravellerProfile(int travelerId)
+        public IHttpActionResult GetTravellerProfile(int travelerId)
         {
             return Ok(travellerBL.GetTravellerProfile(travelerId));
         }
@@ -68,9 +68,9 @@ namespace HostellerAPI.Controllers
         }
 
         [Route("api/GetTravellerCheckInHistory")]
-        public async Task<IHttpActionResult> GetTravellerCheckInHistory(Int64 travellerID)
+        public IHttpActionResult GetTravellerCheckInHistory(Int64 travellerID)
         {
-           
+
             return Ok(travellerBL.GetTravellerCheckInHistory(travellerID));
         }
     }
