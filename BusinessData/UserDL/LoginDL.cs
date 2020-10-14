@@ -217,10 +217,9 @@ namespace BusinessData
                             break;
 
 
-
                     }
                 }
-                Result = Convert.ToInt16(DALHelper.ExecuteScalar(transaction, CommandType.StoredProcedure, "RegisterUsers", paramData));
+                Result = Convert.ToInt16(DALHelper.ExecuteNonQuery(transaction, CommandType.StoredProcedure, "RegisterUsers", paramData));
                 return Result;
             }
             catch (Exception ex)

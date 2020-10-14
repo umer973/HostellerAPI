@@ -1,18 +1,18 @@
-﻿using HostellerAPI.Common;
-
-using Modals;
-using System;
-using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Threading.Tasks;
-using System.Web.Http;
-using BusinessLogic;
-
+﻿
 namespace HostellerAPI.Controllers
 {
+    using HostellerAPI.Common;
+
+    using Modals;
+    using System;
+    using System.Collections.Generic;
+    using System.Collections.Specialized;
+    using System.Linq;
+    using System.Net;
+    using System.Net.Http;
+    using System.Threading.Tasks;
+    using System.Web.Http;
+    using BusinessLogic;
 
     public class UserController : ApiController
     {

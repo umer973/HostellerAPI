@@ -16,42 +16,47 @@ namespace BusinessLogic.TravellerBL
     {
         TravellerDL _travellerDL = new TravellerDL();
 
-        public string AddTravellerCheckInDetails(TravellerCheckIn _traveller)
+        public object AddTravellerCheckInDetails(TravellerCheckIn _traveller)
         {
             bool IsSuccess = true;
-            string message = "";
             IDbTransaction transaction = null;
+            object objResult = null;
+            DataTable dtResult = null;
+            IDbConnection con = null;
+
             try
             {
                 transaction = DALHelper.GetTransaction();
+                con = DALHelper.GetConnection();
 
                 Int64 resultID = _travellerDL.AddTravellerCheckInDetails(_traveller, transaction);
-                DateTime dt = System.DateTime.Now;
-                var day = dt.DayOfWeek;
-                var time = dt.TimeOfDay;
+
                 if (resultID > 0)
                 {
-                    if (_traveller.Action == "1")
+                    if (_traveller.Action == "1") // Check In
                     {
-                        message = "Traveller CheckedIn Sucessfully on " + day + " at " + time;
+                        dtResult = _travellerDL.GetTravellerChekInInfo(_traveller, transaction, "0");
+                        objResult = dtResult;
+
                     }
-                    else if (_traveller.Action == "2")
+                    else if (_traveller.Action == "2") // Check Out
                     {
-                        message = "Traveller Checked Out Sucessfully on " + day + " at " + time;
+                        dtResult = _travellerDL.GetTravellerChekInInfo(_traveller, transaction, "1");
+                        objResult = dtResult;
                     }
 
                 }
                 else if (resultID == -1)
                 {
-                    message = "Traveller already Checked In";
+                    objResult = "Traveller already Checked In";
                 }
                 else if (resultID == -3)
                 {
-                    message = "Traveller is not Checked In";
+                    objResult = "Traveller is not Checked In";
                 }
                 else if (resultID == -4)
                 {
-                    message = "QRCode not found";
+                    objResult = "QRCode not found";
                 }
 
             }
@@ -66,39 +71,7 @@ namespace BusinessLogic.TravellerBL
             {
                 DALHelper.CloseDB(transaction, IsSuccess);
             }
-            return message;
-        }
-
-        public object GetTravellerCheckIninfo(Int64 travellerID)
-        {
-            object objResult = null;
-            DataTable dtResult = null;
-            IDbConnection con = null;
-            try
-            {
-                DateTime dt = System.DateTime.Now;
-                var day = dt.DayOfWeek;
-                var time = dt.TimeOfDay;
-
-                con = DALHelper.GetConnection();
-                dtResult = _travellerDL.GetTravellerChekInInfo(travellerID, con);
-                if (dtResult.Rows.Count > 0)
-                {
-                    objResult = "CheckedIn on " + day + " at " + time;
-                }
-                else
-                {
-                    objResult = null;
-                }
-
-            }
-            catch (Exception ex)
-            {
-                ErrorLogDL.InsertErrorLog(ex.Message, "GetTravellerCheckIninfo");
-            }
-
             return objResult;
-
         }
 
         public string RegisterTravellerUser(Traveller _traveller)
@@ -151,7 +124,7 @@ namespace BusinessLogic.TravellerBL
             IDbConnection con = null;
             try
             {
-       
+
 
                 con = DALHelper.GetConnection();
                 dtResult = _travellerDL.GetTravellerProfile(travellerID, con);
@@ -169,7 +142,38 @@ namespace BusinessLogic.TravellerBL
             {
                 ErrorLogDL.InsertErrorLog(ex.Message, "GetTravellerProfile");
             }
-          
+
+
+            return objResult;
+
+        }
+
+        public object GetTravellerCheckInHistory(Int64 travellerID)
+        {
+            object objResult = null;
+            DataTable dtResult = null;
+            IDbConnection con = null;
+            try
+            {
+
+
+                con = DALHelper.GetConnection();
+                dtResult = _travellerDL.GetTravellerCheckInHistory(travellerID, con, "2");
+                if (dtResult.Rows.Count > 0)
+                {
+                    objResult = dtResult;
+                }
+                else
+                {
+                    objResult = "No history found";
+                }
+
+            }
+            catch (Exception ex)
+            {
+                ErrorLogDL.InsertErrorLog(ex.Message, "GetTravellerCheckInHistory");
+            }
+
 
             return objResult;
 

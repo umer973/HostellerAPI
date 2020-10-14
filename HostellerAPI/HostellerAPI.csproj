@@ -166,7 +166,6 @@
     <Compile Include="Common\ValidationMessageType.cs" />
     <Compile Include="Controllers\HostelController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
-    <Compile Include="Controllers\TravellerCheckInController.cs" />
     <Compile Include="Controllers\TravellerController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Helper\CorsPolicyFactory.cs" />

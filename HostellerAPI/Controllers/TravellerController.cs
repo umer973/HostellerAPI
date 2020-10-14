@@ -62,26 +62,16 @@ namespace HostellerAPI.Controllers
 
             _traveller.hostelId = Convert.ToInt32(formData["hostelId"]);
             _traveller.travellerQRCode = formData["travellerQRCode"];
-            if (formData["checkInDate"] != "")
-            {
-                _traveller.checkInDate = Convert.ToDateTime(formData["checkInDate"]);
-                _traveller.Action = "1";
-            }
-            else
-            {
-                _traveller.checkInDate = System.DateTime.Now;
-            }
-            if (formData["checkOutDate"] != "")
-            {
-                _traveller.checkOutDate = Convert.ToDateTime(formData["checkOutDate"]);
-                _traveller.Action = "2";
-            }
-            else
-            {
-                _traveller.checkOutDate = System.DateTime.Now;
-            }
+            _traveller.Action = formData["status"];
 
             return Ok(travellerBL.AddTravellerCheckInDetails(_traveller));
+        }
+
+        [Route("api/GetTravellerCheckInHistory")]
+        public async Task<IHttpActionResult> GetTravellerCheckInHistory(Int64 travellerID)
+        {
+           
+            return Ok(travellerBL.GetTravellerCheckInHistory(travellerID));
         }
     }
 }
