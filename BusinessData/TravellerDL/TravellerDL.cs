@@ -109,6 +109,15 @@ namespace BusinessData.TravellerDL
                         case "Status":
                             Item.Value = _traveller.Action;
                             break;
+                        case "checkInDate":
+                            Item.Value = _traveller.checkInDate;
+                            break;
+                        case "checkOutDate":
+                            Item.Value = _traveller.checkOutDate;
+                            break;
+                        case "TrackingId":
+                            Item.Value = _traveller.trackingId;
+                            break;
 
 
                     }

@@ -13,5 +13,6 @@ namespace Modals
         public DateTime checkInDate { get; set; }
         public DateTime checkOutDate { get; set; }
         public string Action { get; set; }
+        public long trackingId { get; set; }
     }
 }
