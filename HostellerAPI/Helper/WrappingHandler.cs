@@ -24,8 +24,8 @@ namespace HostellerAPI
         private static HttpResponseMessage BuildApiResponse(HttpRequestMessage request, HttpResponseMessage response, bool isLicenseValid)
         {
             object content;
-            string errorMessage = null;
-            HttpError error = null;
+            ///string errorMessage = null;
+            //HttpError error = null;
             int ValidationMessageType = 1; // enum ValidationMessageType        
             bool IsAPIException = false;
 

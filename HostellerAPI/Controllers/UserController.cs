@@ -82,6 +82,33 @@ namespace HostellerAPI.Controllers
             return Ok("Test help text");
         }
 
+        [HttpGet]
+        [Route("api/ValidateEmail")]
+        public IHttpActionResult ValidateEmail(string email)
+        {
+            return Ok(_loginBL.ValidateEmail(email));
+        }
+
+        [Route("api/ResetPassword")]
+        public async Task<IHttpActionResult> ResetPassword()
+        {
+            if (!Request.Content.IsMimeMultipartContent())
+            {
+                throw new HttpResponseException(HttpStatusCode.UnsupportedMediaType);
+            }
+
+            var provider = await Request.Content.ReadAsMultipartAsync<InMemoryMultipartFormDataStreamProvider>(new InMemoryMultipartFormDataStreamProvider());
+            //access form data  
+            NameValueCollection formData = provider.FormData;
+
+            var user = new User
+            {
+                userId = Convert.ToInt32(formData["userId"]),
+                password = formData["password"]
+            };
+            return Ok(_loginBL.ResetPassword(user));
+        }
+
 
     }
 }

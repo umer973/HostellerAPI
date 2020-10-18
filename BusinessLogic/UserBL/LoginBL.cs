@@ -16,6 +16,7 @@ namespace BusinessLogic
         LoginDL _loginDL;
         HostelDL _hostelDL;
         User _userDL;
+
         public LoginBL()
         {
             _loginDL = new LoginDL();
@@ -109,7 +110,6 @@ namespace BusinessLogic
             return message;
         }
 
-
         public string ChangeUserAuthentication(User _user, string newPassword)
         {
             bool IsSuccess = true;
@@ -137,6 +137,75 @@ namespace BusinessLogic
 
                 IsSuccess = false;
                 ErrorLogDL.InsertErrorLog(ex.Message, "RegisterTravellerUser");
+                throw;
+
+            }
+            finally
+            {
+                DALHelper.CloseDB(transaction, IsSuccess);
+            }
+
+            return message;
+        }
+
+        public object ValidateEmail(string email)
+        {
+            object objResult = null;
+            Int64 Result = 0;
+            IDbConnection con = null;
+            try
+            {
+
+
+                con = DALHelper.GetConnection();
+                Result = _loginDL.ValidateEmail(email, con);
+                if (Result > 0)
+                {
+                    objResult = Result;
+                }
+                else
+                {
+                    objResult = false;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                ErrorLogDL.InsertErrorLog(ex.Message, "ValidateEmail");
+            }
+
+
+            return objResult;
+
+        }
+
+        public string ResetPassword(User _user)
+        {
+            bool IsSuccess = true;
+            string message = "";
+            IDbTransaction transaction = null;
+            try
+            {
+                transaction = DALHelper.GetTransaction();
+
+                Int64 resultID = _loginDL.ResetPassword(_user, transaction);
+
+                if (resultID > 0)
+                {
+                    message = "Password reset sucessfully";
+                }
+                else
+                {
+                    message = "unable to reset password please contact support provider";
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+
+                IsSuccess = false;
+                ErrorLogDL.InsertErrorLog(ex.Message, "ResetPassword");
                 throw;
 
             }

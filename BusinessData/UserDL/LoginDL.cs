@@ -223,11 +223,7 @@ namespace BusinessData
 
                 DALHelper.FillDataset(transaction, CommandType.StoredProcedure, "RegisterUsers", dsResult, new string[] { "Users" }, paramData);
 
-                return dsResult.Tables.Count > 0 ? Convert.ToInt64(dsResult.Tables["Users"].Rows[0]["UserId"].ToString()) : 0;
-
-
-
-
+                return dsResult.Tables.Contains("Users") && dsResult.Tables["Users"].Rows.Count > 0 ? Convert.ToInt64(dsResult.Tables["Users"].Rows[0]["UserId"].ToString()) : 0;
 
             }
             catch (Exception ex)
@@ -237,7 +233,66 @@ namespace BusinessData
             }
         }
 
+        public Int64 ValidateEmail(string email, IDbConnection con)
+        {
+            try
+            {
+                IDbDataParameter[] paramData;
+                Int64 Result = 0;
+                DataSet dsResult = new DataSet();
 
+                paramData = DALHelperParameterCache.GetSpParameterSet(con, "ValidateEmail"); foreach (IDbDataParameter Item in paramData)
+                {
+                    switch (Item.ParameterName)
+                    {
+
+                        case "Email":
+                            Item.Value = email;
+                            break;
+                    }
+
+                }
+
+                DALHelper.FillDataset(con, CommandType.StoredProcedure, "ValidateEmail", dsResult, new string[] { "Users" }, paramData);
+
+                return dsResult.Tables.Contains("Users") && dsResult.Tables["Users"].Rows.Count > 0 ? Convert.ToInt64(dsResult.Tables["Users"].Rows[0]["UserId"].ToString()) : 0;
+            }
+            catch (Exception ex)
+            {
+                // ErrorLogDL.InsertErrorLog(ex.Message, "RegisterTravellerUser");
+                throw ex;
+            }
+        }
+
+        public Int16 ResetPassword(User _user, IDbTransaction transaction)
+        {
+            try
+            {
+                IDbDataParameter[] paramData;
+                Int16 Result = 0;
+                paramData = DALHelperParameterCache.GetSpParameterSet(transaction, "ResetPassword"); foreach (IDbDataParameter Item in paramData)
+                {
+                    switch (Item.ParameterName)
+                    {
+                        case "UserId":
+                            Item.Value = _user.userId;
+                            break;
+                        case "Password":
+                            Item.Value = _user.password;
+                            break;
+
+
+                    }
+                }
+                Result = Convert.ToInt16(DALHelper.ExecuteNonQuery(transaction, CommandType.StoredProcedure, "ResetPassword", paramData));
+                return Result;
+            }
+            catch (Exception ex)
+            {
+                ErrorLogDL.InsertErrorLog(ex.Message, "ResetPassword");
+                throw ex;
+            }
+        }
 
         #endregion
     }

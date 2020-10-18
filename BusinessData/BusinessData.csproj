@@ -32,7 +32,7 @@
   <ItemGroup>
     <Reference Include="KI.RIS.DAL, Version=0.0.0.0, Culture=neutral, PublicKeyToken=4931260462c625db, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\DALHelper-master\bin\Debug\KI.RIS.DAL.dll</HintPath>
+      <HintPath>C:\Users\DEVELOPPING SYSTEM\Downloads\KI.RIS.DAL.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Owin, Version=4.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Owin.4.1.0\lib\net45\Microsoft.Owin.dll</HintPath>
