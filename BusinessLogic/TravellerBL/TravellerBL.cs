@@ -148,7 +148,7 @@ namespace BusinessLogic.TravellerBL
 
         }
 
-        public object GetTravellerCheckInHistory(Int64 travellerID)
+        public object GetTravellerCheckInHistory(Int64 travellerID,string mode)
         {
             object objResult = null;
             DataTable dtResult = null;
@@ -158,7 +158,7 @@ namespace BusinessLogic.TravellerBL
 
 
                 con = DALHelper.GetConnection();
-                dtResult = _travellerDL.GetTravellerCheckInHistory(travellerID, con, "2");
+                dtResult = _travellerDL.GetTravellerCheckInHistory(travellerID, con, mode);
                 if (dtResult.Rows.Count > 0)
                 {
                     objResult = dtResult;

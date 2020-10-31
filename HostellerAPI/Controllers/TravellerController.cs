@@ -89,10 +89,10 @@ namespace HostellerAPI.Controllers
         }
 
         [Route("api/GetTravellerCheckInHistory")]
-        public IHttpActionResult GetTravellerCheckInHistory(Int64 travellerID)
+        public IHttpActionResult GetTravellerCheckInHistory(Int64 travellerID,string mode)
         {
 
-            return Ok(travellerBL.GetTravellerCheckInHistory(travellerID));
+            return Ok(travellerBL.GetTravellerCheckInHistory(travellerID,mode));
         }
     }
 }

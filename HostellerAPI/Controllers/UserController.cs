@@ -76,10 +76,24 @@ namespace HostellerAPI.Controllers
 
         }
 
-        [Route("api/GetHelpUsText")]
-        public IHttpActionResult GetHelpUsText()
+        [Route("api/SaveHelpUsText")]
+        public async Task<IHttpActionResult> SaveHelpUsText()
         {
-            return Ok("Test help text");
+            if (!Request.Content.IsMimeMultipartContent())
+            {
+                throw new HttpResponseException(HttpStatusCode.UnsupportedMediaType);
+            }
+
+            var provider = await Request.Content.ReadAsMultipartAsync<InMemoryMultipartFormDataStreamProvider>(new InMemoryMultipartFormDataStreamProvider());
+            //access form data  
+            NameValueCollection formData = provider.FormData;
+
+
+            Int64 userId = Convert.ToInt32(formData["userId"]);
+            string title = formData["title"];
+            string message = formData["message"];
+
+            return Ok(_loginBL.InsertHelpUs(userId, title, message));
         }
 
         [HttpGet]

@@ -216,6 +216,44 @@ namespace BusinessLogic
 
             return message;
         }
+
+        public Boolean InsertHelpUs(Int64 userId, string title, string message)
+        {
+            bool IsSuccess = true;
+            bool result = false;
+            IDbTransaction transaction = null;
+            try
+            {
+                transaction = DALHelper.GetTransaction();
+
+                Int64 resultID = _loginDL.InsertHelpUs(userId, title, message, transaction);
+
+                if (resultID > 0)
+                {
+                    result = true;
+                }
+                else
+                {
+                    result = false;
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+
+                IsSuccess = false;
+                ErrorLogDL.InsertErrorLog(ex.Message, "InsertHelpUs");
+                throw;
+
+            }
+            finally
+            {
+                DALHelper.CloseDB(transaction, IsSuccess);
+            }
+
+            return result;
+        }
     }
 }
 

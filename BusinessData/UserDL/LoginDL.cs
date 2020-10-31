@@ -31,6 +31,38 @@ namespace BusinessData
 
             return SelectSecurityProfile(_user, con);
         }
+
+        public Int64 InsertHelpUs(Int64 userId, string title, string message, IDbTransaction transaction)
+        {
+            try
+            {
+                IDbDataParameter[] paramData;
+                Int16 Result = 0;
+                paramData = DALHelperParameterCache.GetSpParameterSet(transaction, "InsertHelpUs"); foreach (IDbDataParameter Item in paramData)
+                {
+                    switch (Item.ParameterName)
+                    {
+                        case "UserId":
+                            Item.Value = userId;
+                            break;
+                        case "Title":
+                            Item.Value = title;
+                            break;
+                        case "Message":
+                            Item.Value = message;
+                            break;
+
+                    }
+                }
+                Result = Convert.ToInt16(DALHelper.ExecuteNonQuery(transaction, CommandType.StoredProcedure, "InsertHelpUs", paramData));
+                return Result;
+            }
+            catch (Exception ex)
+            {
+                ErrorLogDL.InsertErrorLog(ex.Message, "InsertHelpUs");
+                throw ex;
+            }
+        }
         #endregion
 
         #region Private Methods
