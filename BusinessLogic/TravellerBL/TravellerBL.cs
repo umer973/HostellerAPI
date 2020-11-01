@@ -35,13 +35,13 @@ namespace BusinessLogic.TravellerBL
                 {
                     if (_traveller.Action == "1") // Check In
                     {
-                        dtResult = _travellerDL.GetTravellerChekInInfo(_traveller, transaction, "0");
+                        dtResult = _travellerDL.GetTravellerChekInInfo(_traveller, transaction, "4");
                         objResult = dtResult;
 
                     }
                     else if (_traveller.Action == "2") // Check Out
                     {
-                        dtResult = _travellerDL.GetTravellerChekInInfo(_traveller, transaction, "1");
+                        dtResult = _travellerDL.GetTravellerChekInInfo(_traveller, transaction, "5");
                         objResult = dtResult;
                     }
 
@@ -165,7 +165,7 @@ namespace BusinessLogic.TravellerBL
                 }
                 else
                 {
-                    objResult = "No history found";
+                    objResult = "No data found";
                 }
 
             }

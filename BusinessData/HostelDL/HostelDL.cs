@@ -92,7 +92,7 @@ namespace BusinessData
                         case "ImageUrl":
                             Item.Value = dr["ImageUrl"];
                             break;
-                        
+
 
                     }
                 }
@@ -112,7 +112,7 @@ namespace BusinessData
             try
             {
                 IDbDataParameter[] paramData;
-               
+
                 paramData = DALHelperParameterCache.GetSpParameterSet(con, "GetHostellerGallery"); foreach (IDbDataParameter Item in paramData)
                 {
                     switch (Item.ParameterName)
@@ -121,7 +121,7 @@ namespace BusinessData
                             Item.Value = hostelId;
 
                             break;
-                     
+
                     }
                 }
                 DALHelper.FillDataset(con, CommandType.StoredProcedure, "GetHostellerGallery", dsResult, new string[] { "HostelGallery" }, paramData);
@@ -189,6 +189,38 @@ namespace BusinessData
             catch (Exception ex)
             {
                 ErrorLogDL.InsertErrorLog(ex.Message, "GetHostelProfile");
+                throw ex;
+            }
+        }
+
+        public DataTable GetAllTravellerCheckInDetails(Int64 hostelId, IDbConnection con, string mode)
+        {
+            DataSet dsResult = new DataSet();
+            try
+            {
+                IDbDataParameter[] paramData;
+
+                paramData = DALHelperParameterCache.GetSpParameterSet(con, "GetTravellerCheckinDetails"); foreach (IDbDataParameter Item in paramData)
+                {
+                    switch (Item.ParameterName)
+                    {
+                        case "HostelId":
+                            Item.Value = hostelId;
+                            break;
+                        case "Mode":
+                            Item.Value = mode;
+
+                            break;
+
+                    }
+                }
+                DALHelper.FillDataset(con, CommandType.StoredProcedure, "GetTravellerCheckinDetails", dsResult, new string[] { "Traveller" }, paramData);
+
+                return dsResult.Tables.Contains("Traveller") ? dsResult.Tables["Traveller"] : null;
+            }
+            catch (Exception ex)
+            {
+                ErrorLogDL.InsertErrorLog(ex.Message, "GetTravellerCheckInHistory");
                 throw ex;
             }
         }

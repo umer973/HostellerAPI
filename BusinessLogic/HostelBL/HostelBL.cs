@@ -65,10 +65,10 @@ namespace BusinessLogic
             IDbConnection con = null;
             try
             {
-                
+
                 con = DALHelper.GetConnection();
                 dtResult = _hostelDL.GetGallery(hostelId, con);
-                if(dtResult.Rows.Count>0)
+                if (dtResult.Rows.Count > 0)
                 {
                     objResult = dtResult;
                 }
@@ -173,6 +173,35 @@ namespace BusinessLogic
             }
 
             return dsResult;
+
+        }
+
+        public object GetAllTravellerCheckInDetails(Int64 hostelId, string mode)
+        {
+            object objResult = null;
+            DataTable dtResult = null;
+            IDbConnection con = null;
+            try
+            {
+                con = DALHelper.GetConnection();
+                dtResult = _hostelDL.GetAllTravellerCheckInDetails(hostelId, con, mode);
+                if (dtResult.Rows.Count > 0)
+                {
+                    objResult = dtResult;
+                }
+                else
+                {
+                    objResult = "No ChecK In found";
+                }
+
+            }
+            catch (Exception ex)
+            {
+                ErrorLogDL.InsertErrorLog(ex.Message, "GetAllTravellerCheckInDetails");
+            }
+
+
+            return objResult;
 
         }
     }

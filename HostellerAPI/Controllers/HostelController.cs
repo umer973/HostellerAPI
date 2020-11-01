@@ -175,6 +175,13 @@ namespace HostellerAPI.Controllers
             return Ok(_hostelBL.GetHostelProfile(Convert.ToInt32(hostelId)));
         }
 
+        [Route("api/GetAllTravellerCheckInDetails")]
+        public IHttpActionResult GetTravellerCheckInDetails(Int64 hostelId, string mode)
+        {
+
+            return Ok(_hostelBL.GetAllTravellerCheckInDetails(hostelId, mode));
+        }
+
     }
 
 
