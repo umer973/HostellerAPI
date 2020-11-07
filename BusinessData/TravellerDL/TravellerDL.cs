@@ -118,6 +118,12 @@ namespace BusinessData.TravellerDL
                         case "TrackingId":
                             Item.Value = _traveller.trackingId;
                             break;
+                        case "IsPointsSpent":
+                            Item.Value = _traveller.isPontsSpent;
+                            break;
+                        case "NoOfPointsSpent":
+                            Item.Value = _traveller.NoOfPointsSpent;
+                            break;
 
 
                     }

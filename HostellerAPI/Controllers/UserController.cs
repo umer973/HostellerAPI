@@ -13,7 +13,9 @@ namespace HostellerAPI.Controllers
     using System.Threading.Tasks;
     using System.Web.Http;
     using BusinessLogic;
+    using CommonLib.Encryption;
 
+    [Authorize]
     public class UserController : ApiController
     {
         LoginBL _loginBL;
@@ -23,6 +25,7 @@ namespace HostellerAPI.Controllers
             _loginBL = new LoginBL();
         }
 
+        [AllowAnonymous]
         [Route("api/RegisterUser")]
         public async Task<IHttpActionResult> RegisterUser()
         {
@@ -37,13 +40,14 @@ namespace HostellerAPI.Controllers
             NameValueCollection formData = provider.FormData;
 
             _user.username = formData["userName"];
-            _user.password = formData["password"];
+            _user.password = Encryption.encrypt(formData["password"]);
             _user.email = formData["email"];
             _user.userType = formData["userType"];
 
             return Ok(_loginBL.RegisterUser(_user));
 
         }
+
 
         [Route("api/ChangePassword")]
         public async Task<IHttpActionResult> ChangePassword()
@@ -61,9 +65,9 @@ namespace HostellerAPI.Controllers
             var user = new User
             {
                 userId = Convert.ToInt32(formData["userId"]),
-                password = formData["oldPassword"]
+                password = Encryption.encrypt(formData["oldPassword"]),
             };
-            var newPassword = formData["newPassword"];
+            var newPassword = Encryption.encrypt(formData["newPassword"]);
 
             return Ok(_loginBL.ChangeUserAuthentication(user, newPassword));
 
@@ -118,7 +122,7 @@ namespace HostellerAPI.Controllers
             var user = new User
             {
                 userId = Convert.ToInt32(formData["userId"]),
-                password = formData["password"]
+                password = Encryption.encrypt(formData["password"])
             };
             return Ok(_loginBL.ResetPassword(user));
         }

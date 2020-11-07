@@ -14,5 +14,7 @@ namespace Modals
         public DateTime checkOutDate { get; set; }
         public string Action { get; set; }
         public long trackingId { get; set; }
+        public bool isPontsSpent { get; set; }
+        public int NoOfPointsSpent { get; set; }
     }
 }

@@ -32,6 +32,8 @@ namespace HostellerAPI.App_Start
         /// </summary>  
         private LoginBL _loginBL = new LoginBL();
 
+        private static DataTable LoginDetails = null;
+
         //public AppOAuthProvider(string publicClientId)
         //{
         //    //TODO: Pull from configuration  
@@ -47,17 +49,28 @@ namespace HostellerAPI.App_Start
         public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
         {
 
-            string apikey = "Jkx3QwswBMpfRTulZEmYz7b0p0cc";
-            string secret = "gZoeeLONSRfg8U";
 
             var identity = new ClaimsIdentity(context.Options.AuthenticationType);
-
-            if (context.UserName==apikey && context.Password==secret)
+            var user = new User
             {
-                identity.AddClaim(new Claim("username", apikey));
-                identity.AddClaim(new Claim(ClaimTypes.Name, apikey));
-                context.Validated(identity);
+                username = context.UserName,
+                password = Encryption.encrypt(context.Password),
+            };
 
+            LoginDetails = _loginBL.Login(user);
+
+            if (LoginDetails != null && LoginDetails.Rows.Count > 0)
+            {
+                //identity.AddClaim(new Claim("username", user.username));
+                //identity.AddClaim(new Claim(ClaimTypes.Name, user.username));
+                //context.Validated(identity);
+
+                ClaimsIdentity oAuthIdentity = new ClaimsIdentity(context.Options.AuthenticationType);
+                ClaimsIdentity cookiesIdentity = new ClaimsIdentity(context.Options.AuthenticationType);
+                AuthenticationProperties properties = CreateProperties(context.UserName, LoginDetails);
+                AuthenticationTicket ticket = new AuthenticationTicket(oAuthIdentity, properties);
+                context.Validated(ticket);
+                context.Request.Context.Authentication.SignIn(cookiesIdentity);
             }
             else
             {
@@ -65,7 +78,19 @@ namespace HostellerAPI.App_Start
                 return;
             }
         }
-
+        public static AuthenticationProperties CreateProperties(string userName, DataTable loginData)
+        {
+            IDictionary<string, string> data = new Dictionary<string, string>();
+            data.Add("Username", userName);
+            if (loginData != null && loginData.Rows.Count > 0)
+            {
+                data.Add("UserId", loginData.Rows[0]["UserId"].ToString());
+                data.Add("UserType", loginData.Rows[0]["UserType"].ToString());
+                data.Add("Password", Encryption.Decrypt(loginData.Rows[0]["Password"].ToString()));
+                data.Add("Email", loginData.Rows[0]["Email"].ToString());
+            }
+            return new AuthenticationProperties(data);
+        }
         public override Task TokenEndpoint(OAuthTokenEndpointContext context)
         {
             foreach (KeyValuePair<string, string> property in context.Properties.Dictionary)
@@ -75,7 +100,7 @@ namespace HostellerAPI.App_Start
             }
 
             // Return info.  
-            return Task.FromResult<object>(null);
+            return Task.FromResult<object>(LoginDetails);
 
         }
 

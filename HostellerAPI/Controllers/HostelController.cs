@@ -18,7 +18,7 @@ using HostellerAPI.Common;
 
 namespace HostellerAPI.Controllers
 {
-
+    [Authorize]
     public class HostelController : ApiController
     {
         HostelBL _hostelBL;
@@ -27,8 +27,8 @@ namespace HostellerAPI.Controllers
         {
             _hostelBL = new HostelBL();
         }
-        
 
+        [AllowAnonymous]
         [Route("api/UpdateHostelProfile")]
         public async Task<IHttpActionResult> POST()
         {
@@ -102,7 +102,7 @@ namespace HostellerAPI.Controllers
 
             return Ok(_hostelBL.UpdateHostelUser(hostel));
         }
-
+       
         [Route("api/AddGallery")]
         public async Task<IHttpActionResult> AddGallery()
         {
@@ -157,24 +157,28 @@ namespace HostellerAPI.Controllers
             return Ok(_hostelBL.AddGallery(dtGallery, hostelId));
         }
 
+       
         [Route("api/GetGallery")]
         public IHttpActionResult GET(string hostelId)
         {
             return Ok(_hostelBL.GetGallery(Convert.ToInt32(hostelId)));
         }
 
+      
         [Route("api/GetHostels")]
         public IHttpActionResult GetHostels(string key)
         {
             return Ok(_hostelBL.GetHostels(key));
         }
 
+       
         [Route("api/GetHostelProfile")]
         public IHttpActionResult GetHostelProfile(string  hostelId)
         {
             return Ok(_hostelBL.GetHostelProfile(Convert.ToInt32(hostelId)));
         }
 
+       
         [Route("api/GetAllTravellerCheckInDetails")]
         public IHttpActionResult GetTravellerCheckInDetails(Int64 hostelId, string mode)
         {

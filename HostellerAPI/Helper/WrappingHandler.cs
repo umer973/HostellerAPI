@@ -157,7 +157,7 @@ namespace HostellerAPI
                     response.StatusCode = HttpStatusCode.Accepted;
                     StatusCode = (int)HttpStatusCode.Accepted;
                     Result = "";
-                    this.Message = "Authorization has been denied for this request.(Session validity is expired)"; //result.ToString();
+                    this.Message = "Authorization has been denied for this request.(Token session validity is expired)"; //result.ToString();
                     break;
                 //
                 default:

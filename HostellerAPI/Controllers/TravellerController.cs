@@ -14,10 +14,12 @@ using BusinessData;
 
 namespace HostellerAPI.Controllers
 {
+    [Authorize]
     public class TravellerController : ApiController
     {
         TravellerBL travellerBL = new TravellerBL();
 
+        [AllowAnonymous]
         [Route("api/UpdateTravellerProfile")]
         public async Task<IHttpActionResult> POST()
         {
@@ -51,8 +53,6 @@ namespace HostellerAPI.Controllers
         public async Task<IHttpActionResult> CheckInCheckOut()
         {
             TravellerCheckIn _traveller = new TravellerCheckIn();
-
-            ErrorLogDL.InsertErrorLog("Log","Logging");
 
             // Check if the request contains multipart/form-data.  
             if (!Request.Content.IsMimeMultipartContent())
@@ -92,6 +92,8 @@ namespace HostellerAPI.Controllers
                     _traveller.checkOutDate = System.DateTime.Now;
                 }
 
+                _traveller.isPontsSpent = Convert.ToBoolean(formData["isPointsSpent"]);
+                _traveller.NoOfPointsSpent = (string.IsNullOrEmpty(formData["noOfPoints"].ToString())) ? 0 : Convert.ToInt16(formData["noOfPoints"]);
 
             }
             catch (Exception ex)

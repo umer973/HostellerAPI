@@ -24,7 +24,7 @@ namespace BusinessLogic
             _userDL = new User();
         }
 
-        public object Login(User _user)
+        public DataTable Login(User _user)
         {
             IDbConnection con = null;
             DataSet dsData = new DataSet();
@@ -33,26 +33,8 @@ namespace BusinessLogic
             try
             {
                 con = DALHelper.GetConnection();
-                DataTable loginData = _loginDL.Login(_user, con);
-                if (loginData != null && loginData.Rows.Count > 0)
-                {
-                    object objUser = loginData;
-                    object objGallery = null;
-                    dsResult.Add("User", objUser);
-                    if (loginData.Rows[0]["UserType"].ToString() == "Hostel")
-                    {
-                        // var gallery = _hostelDL.GetGallery(Convert.ToInt32(loginData.Rows[0]["UserId"]), con);
-                        // objGallery = gallery;
-                        // dsResult.Add("Gallery", objGallery);
-                    }
-                    return dsResult;
-                }
-                else
-                {
-                    loginData = null;
+                return _loginDL.Login(_user, con);
 
-                    return "Invalid Credentials";
-                }
 
             }
             catch (Exception ex)

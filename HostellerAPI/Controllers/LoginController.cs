@@ -10,6 +10,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using HostellerAPI.Common;
 using System.Collections.Specialized;
+using CommonLib.Encryption;
 
 namespace HostellerAPI.Controllers
 {
@@ -22,8 +23,8 @@ namespace HostellerAPI.Controllers
             _loginBL = new LoginBL();
 
         }
-
-
+        [Authorize]
+        [Route("api/TestApi")]
         public IHttpActionResult GET()
         {
             var identity = (ClaimsIdentity)User.Identity;
@@ -47,10 +48,10 @@ namespace HostellerAPI.Controllers
             var user = new User
             {
                 username = formData["userName"],
-                password = formData["password"],
+                password = Encryption.encrypt(formData["password"]),
                 email = formData["email"],
                 deviceToken = "",
-                
+
             };
 
             return Ok(_loginBL.Login(user));
