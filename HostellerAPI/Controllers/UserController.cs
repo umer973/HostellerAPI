@@ -14,6 +14,9 @@ namespace HostellerAPI.Controllers
     using System.Web.Http;
     using BusinessLogic;
     using CommonLib.Encryption;
+    using Modals;
+    using Modals;
+    using Modals;
 
     [Authorize]
     public class UserController : ApiController
@@ -99,14 +102,14 @@ namespace HostellerAPI.Controllers
 
             return Ok(_loginBL.InsertHelpUs(userId, title, message));
         }
-
+        [AllowAnonymous]
         [HttpGet]
         [Route("api/ValidateEmail")]
         public IHttpActionResult ValidateEmail(string email)
         {
             return Ok(_loginBL.ValidateEmail(email));
         }
-
+        [AllowAnonymous]
         [Route("api/ResetPassword")]
         public async Task<IHttpActionResult> ResetPassword()
         {
