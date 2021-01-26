@@ -1,22 +1,17 @@
 ﻿
 namespace HostellerAPI.Controllers
 {
-    using HostellerAPI.Common;
+    using Common;
 
     using Modals;
     using System;
-    using System.Collections.Generic;
     using System.Collections.Specialized;
-    using System.Linq;
     using System.Net;
     using System.Net.Http;
     using System.Threading.Tasks;
     using System.Web.Http;
     using BusinessLogic;
     using CommonLib.Encryption;
-    using Modals;
-    using Modals;
-    using Modals;
 
     [Authorize]
     public class UserController : ApiController
