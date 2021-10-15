@@ -23,7 +23,7 @@ namespace HostellerAPI.Controllers
             _loginBL = new LoginBL();
 
         }
-        [Authorize]
+      
         [Route("api/TestApi")]
         public IHttpActionResult GET()
         {
